@@ -1,6 +1,6 @@
 # Hydrogeology Testing Suite
 
-Alejandro F Queiruga  
+Alejandro Francisco Queiruga  
 Lawrence Berkeley National Lab  
 2018
 
@@ -41,6 +41,18 @@ What happens when one of these tests isn't Lipschitz continuous? What if the phy
 
 ## The Tests
 
+Right now, there are only solutions for poroelasticity and single-phase flow.
+
+- Exact problems:
+  1. Unaixial compression and simple shear
+  2. Constant flux flow
+- Numerical problems:
+  1. Terzaghi's consolidation
+  2. de Leeuw's consolidation
+  3. Radial production in a poroelastic system
+- Reference problems:
+  1. None yet
+
 The units are all in SI. This strictly doesn't matter, but for some codes the properties are not inputs, but intrinsic to the formulation!
 
 The problems in the database each have their own module.
@@ -48,14 +60,35 @@ Each module has a description, default parameter dictionary, and a solution rout
 They solution routine returns a dictionary of closures. Each closure evaluates the analytical solution at a point that is some combination of $(x,y,z,t)$ for the given parameters.
 The module will have a default set of parameters.
 
-## Using
+## Using the Test Suite
 
+The developer will need to wrap their code into a Python script.
 
+For a command line code, this will look something like this:
 ```python
 def runit(parameters, h,dt):
   make_tough_input(h,dt,parameters)
   sp.call(['TH','millstone_input.py',str(h),str(dt)])
   return process_results_for_testing()
 ```
+where the developer is responsible for autogenerating their input files.
+
+### Making an automated suite
+
+This library also contains tools for 
+```python
+hgt.ExactTestRunner([
+  (hgt.uniaxial, run_uniaxial),
+  (hgt.constant_flux, run_constant_flux),
+])
+```
+
+Running numerical tests is expensive in terms of computing time, which is also a dollar-cost.
+
+There are different strategies to minimize the cost:
+
+1. Only test randomly with frequency, and save the rigorous-churn through tests for weekly tests.
+2. Use a scheduling environment to run tests in parallel on commodity resources.
+3. Schedule them for low-priority queues at a low-cost off-hours. 
 
 ## License
