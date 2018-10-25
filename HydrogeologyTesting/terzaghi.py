@@ -1,7 +1,7 @@
 import numpy as np
 
 """
-This file contains the analytical solution to Terzaghi's consolidation problemself.
+This file contains the analytical solution to Terzaghi's consolidation problem.
 
 It's a dynamic problem with one spatial dimension, height.
 The solutions it returns are P(z,t) and U(z,t).

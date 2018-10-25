@@ -44,16 +44,20 @@ What happens when one of these tests isn't Lipschitz continuous? What if the phy
 Right now, there are only solutions for poroelasticity and single-phase flow.
 
 - Exact problems:
-  1. Unaixial compression and simple shear
+  1. Constant strain modes in elasticity
   2. Constant flux flow
+  
 - Numerical problems:
   1. Terzaghi's consolidation
   2. de Leeuw's consolidation
-  3. Radial production in a poroelastic system
+  3. (M) Thin crack in tension / pressurized
+  4. Poisson problem
+  5. Radial production in a poroelastic system
+  
 - Reference problems:
   1. None yet
 
-The units are all in SI. This strictly doesn't matter, but for some codes the properties are not inputs, but intrinsic to the formulation!
+The units for default properties are all in SI. This strictly doesn't matter, but for some codes the properties are not inputs, but intrinsic to the formulation!
 
 The problems in the database each have their own module.
 Each module has a description, default parameter dictionary, and a solution routine.
