@@ -41,6 +41,21 @@ What happens when one of these tests isn't Lipschitz continuous? What if the phy
 
 ## The Tests
 
+The units are all in SI. This strictly doesn't matter, but for some codes the properties are not inputs, but intrinsic to the formulation!
+
+The problems in the database each have their own module.
+Each module has a description, default parameter dictionary, and a solution routine.
+They solution routine returns a dictionary of closures. Each closure evaluates the analytical solution at a point that is some combination of $(x,y,z,t)$ for the given parameters.
+The module will have a default set of parameters.
+
 ## Using
+
+
+```python
+def runit(parameters, h,dt):
+  make_tough_input(h,dt,parameters)
+  sp.call(['TH','millstone_input.py',str(h),str(dt)])
+  return process_results_for_testing()
+```
 
 ## License
