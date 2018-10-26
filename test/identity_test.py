@@ -1,7 +1,7 @@
 import HydrogeologyTesting as hgtest
 
 problems = [
-    hgtest.mechanics,
+    hgtest.mechanics_constant,
 ]
 for problem in problems:
     def mycode(params, h,dt):
