@@ -14,7 +14,8 @@ class ExactTestRunner():
         self.problem = problem
         self.script = script
     def test(self):
-        pass
+        for test in self.problem.tests:
+            pass
 
 
 class ExactTestingSuite():

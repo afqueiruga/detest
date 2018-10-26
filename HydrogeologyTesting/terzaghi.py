@@ -1,6 +1,8 @@
 import numpy as np
 
-"""
+name = "terzaghi"
+
+description = """
 This file contains the analytical solution to Terzaghi's consolidation problem.
 
 It's a dynamic problem with one spatial dimension, height.

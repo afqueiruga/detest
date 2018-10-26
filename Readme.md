@@ -10,7 +10,7 @@ These tests were originally written to test TOUGH+Millstone and HGMiv.
 
 ## Introduction
 
-Testing numerical scientific and engineering codes has a further challenge than normal software. The results are inexact and the expected behavior can be unknown. The philosphy I have evolved has the following phases:
+Testing numerical scientific and engineering codes has a further challenge than normal software. The results are inexact and the expected behavior can be unknown. The philosophy I have evolved has the following phases:
 
 1. Unit Tests - make sure the code works
 2. Exact Precision Tests - the numerical algorithm gets these **Exactly Correct** to known solutions
@@ -46,14 +46,14 @@ Right now, there are only solutions for poroelasticity and single-phase flow.
 - Exact problems:
   1. Constant strain modes in elasticity
   2. Constant flux flow
-  
+
 - Numerical problems:
   1. Terzaghi's consolidation
   2. de Leeuw's consolidation
   3. (M) Thin crack in tension / pressurized
   4. Poisson problem
   5. Radial production in a poroelastic system
-  
+
 - Reference problems:
   1. None yet
 
@@ -79,7 +79,7 @@ where the developer is responsible for autogenerating their input files.
 
 ### Making an automated suite
 
-This library also contains tools for 
+This library also contains tools for
 ```python
 hgt.ExactTestRunner([
   (hgt.uniaxial, run_uniaxial),
@@ -93,6 +93,6 @@ There are different strategies to minimize the cost:
 
 1. Only test randomly with frequency, and save the rigorous-churn through tests for weekly tests.
 2. Use a scheduling environment to run tests in parallel on commodity resources.
-3. Schedule them for low-priority queues at a low-cost off-hours. 
+3. Schedule them for low-priority queues at a low-cost off-hours.
 
 ## License
