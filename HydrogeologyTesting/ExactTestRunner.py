@@ -1,6 +1,6 @@
+from TestRunner import TestRunner
 
-
-class ExactTestRunner():
+class ExactTestRunner(TestRunner):
     """
     Give this clas one problem and one script, and it will run it with a
     bunch of permutations and assert that the error is within machine
