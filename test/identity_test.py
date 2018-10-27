@@ -7,7 +7,8 @@ problems = [
 ]
 
 class IdentityTest(ut.TestCase):
-    def test(self):
+    def test_identity(self):
+        " Make sure the oracles pass the tests "
         for problem in problems:
             def mycode(params, h,dt):
                 " An exact code "
@@ -15,3 +16,15 @@ class IdentityTest(ut.TestCase):
             etr = hgtest.ExactTestRunner(problem,mycode)
             
             self.assertTrue( etr.test() )
+    def test_wrong(self):
+        " Make sure the test says its wrong for all of them "
+        for problem in problems:
+            def mycode(params, h,dt):
+                " An gaurunteed wrong code "
+                ans = problem(params)
+                for _ in ans.keys():
+                    ans[_] += 1.0
+                return ans
+            etr = hgtest.ExactTestRunner(problem,mycode)
+            
+            self.assertFalse( etr.test() )
