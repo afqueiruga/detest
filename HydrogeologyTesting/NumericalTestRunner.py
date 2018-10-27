@@ -14,8 +14,8 @@ class NumericalTestRunner(TestRunner):
         # Put the results in a db
         sdb = SimDataDB(self.cwd+"/errors.db")
         @sdb.Decorate('test',
-                     [('h':'FLOAT'),('dt':'FLOAT')],
-                     [ (k:'ARRAY') for k in oracle.keys() ])
+                     [('h','FLOAT'),('dt','FLOAT')],
+                     [ (k,'ARRAY') for k in oracle.keys() ])
         def runit(h,dt):
             ans = script(params,h,dt)
             errors = self.calc_errors(oracle,estimate)

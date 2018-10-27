@@ -27,10 +27,10 @@ def uniaxial(parameters):
         return np.array([eps*x,0,0])
     return {'eps':np.array([[eps,0.0,0.0],
                             [0.0,0.0,0.0],
-                            [0.0,0.0,0.0]),
+                            [0.0,0.0,0.0]]),
             'sigma':np.array([[sigxx,sigxy,0.0],
                               [sigxy,sigyy,0.0],
-                              [0.0,  0.0,  sigzz]),
+                              [0.0,  0.0,  sigzz]]),
             'U':U}
 
 def shear(parameters):
@@ -44,10 +44,10 @@ def shear(parameters):
         return np.array([0,eps*x,0])
     return {'eps':np.array([[0.0,eps,0.0],
                             [eps,0.0,0.0],
-                            [0.0,0.0,0.0]),
+                            [0.0,0.0,0.0]]),
             'sigma':np.array([[sigxx,sigxy,0.0],
                               [sigxy,sigyy,0.0],
-                              [0.0,  0.0,  sigzz]),
+                              [0.0,  0.0, sigzz]]),
             'U':U}
 def isotropic(parameters):
     pass

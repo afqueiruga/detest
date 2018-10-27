@@ -1,7 +1,7 @@
 # Parent class
+#import unittest as ut
 
-
-class TestRunner():
+class TestRunner(): #ut.TestCase):
     """
     Give this clas one problem and one script, and it will run a _convergence_
     test on the code, automatically.
@@ -24,4 +24,4 @@ class TestRunner():
         return errors
 
     def test(self):
-        pass
+        return True
