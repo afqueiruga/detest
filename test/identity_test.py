@@ -5,6 +5,7 @@ import unittest as ut
 
 problems = [
     hgtest.mechanics_constant,
+    hgtest.terzaghi,
 ]
 
 class IdentityTest(ut.TestCase):
@@ -15,14 +16,14 @@ class IdentityTest(ut.TestCase):
                 def mycode(params, h,dt):
                     " An exact code "
                     orc = test(params)
-                    pts = np.array([[0.0,0.0,0.0]])
+                    pts = np.random.rand( 10, orc.ptdim )
                     fields = orc(pts)
                     ans = orc(pts)
                     ans['points'] = pts
                     return ans
                 etr = hgtest.ExactTestRunner(test,mycode)
-            
                 self.assertTrue( etr.test() )
+                
     def test_wrong(self):
         " Make sure the test says its wrong for all of them "
         for problem in problems:

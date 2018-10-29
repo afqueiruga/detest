@@ -21,7 +21,7 @@ class Uniaxial():
         # self.default_params = default_parameters
         self.space_dim = 3
         self.time_dep = False
-
+        self.ptdim = 3
         self.params = params
         K_d  = params['K']
         G    = params['G']
@@ -37,12 +37,13 @@ class Uniaxial():
                 'sigma':np.array([[self.sigxx,self.sigxy,0.0],
                                   [self.sigxy,self.sigyy,0.0],
                                   [0.0,  0.0,  self.sigzz]]),
-                'U':np.array([self.eps*x[:,0],0,0])}
+                'U':np.array([ [self.eps*_,0,0] for _ in x[:,0] ])
+                }
 class Shear():
     def __init__(self, params=default_parameters):
         self.space_dim = 3
         self.time_dep = False
-
+        self.ptdim = 3
         self.params = params
         K_d  = params['K']
         G    = params['G']
@@ -58,7 +59,8 @@ class Shear():
                 'sigma':np.array([[self.sigxx,self.sigxy,0.0],
                                   [self.sigxy,self.sigyy,0.0],
                                   [0.0,  0.0,  self.sigzz]]),
-                'U':np.array([0,self.eps*x[:,0],0])}
+                'U':np.array([ [0,self.eps*_,0] for _ in x[:,0] ])
+        }
 
 
 
