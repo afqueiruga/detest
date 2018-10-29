@@ -1,3 +1,4 @@
+from __future__ import print_function
 from TestRunner import TestRunner
 
 class ExactTestRunner(TestRunner):
@@ -14,9 +15,21 @@ class ExactTestRunner(TestRunner):
         self.problem = problem
         self.script = script
     def test(self):
-        for test in self.problem.tests:
-            pass
-        return True
+        passed = True
+        #params = self.problem.parameters
+        oracle = self.problem()
+        params = oracle.params
+        def runit(h,dt):
+            ans = self.script(params,h,dt)
+            errors = self.calc_errors(oracle,ans)
+            return [ ans[k] for k in oracle.keys() ]
+        estimate = runit(1.0,1.0)
+        errors = self.calc_errors(oracle, estimate)
+        for k,v in errors.iteritems():
+            if v>1.0e-15:
+                print("Failed test ",test," for key ",k)
+                passed = False
+        return passed
 
 class ExactTestingSuite():
     """

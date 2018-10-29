@@ -1,5 +1,6 @@
 import HydrogeologyTesting as hgtest
 
+import numpy as np
 import unittest as ut
 
 problems = [
@@ -10,21 +11,31 @@ class IdentityTest(ut.TestCase):
     def test_identity(self):
         " Make sure the oracles pass the tests "
         for problem in problems:
-            def mycode(params, h,dt):
-                " An exact code "
-                return problem(params)
-            etr = hgtest.ExactTestRunner(problem,mycode)
+            for test in problem.tests:
+                def mycode(params, h,dt):
+                    " An exact code "
+                    orc = test(params)
+                    pts = np.array([[0.0,0.0,0.0]])
+                    fields = orc(pts)
+                    ans = orc(pts)
+                    ans['points'] = pts
+                    return ans
+                etr = hgtest.ExactTestRunner(test,mycode)
             
-            self.assertTrue( etr.test() )
+                self.assertTrue( etr.test() )
     def test_wrong(self):
         " Make sure the test says its wrong for all of them "
         for problem in problems:
-            def mycode(params, h,dt):
-                " An gaurunteed wrong code "
-                ans = problem(params)
-                for _ in ans.keys():
-                    ans[_] += 1.0
-                return ans
-            etr = hgtest.ExactTestRunner(problem,mycode)
-            
-            self.assertFalse( etr.test() )
+            for test in problem.tests:
+                def mycode(params, h,dt):
+                    " An gaurunteed wrong code "
+                    orc = test(params)
+                    pts = np.array([[0.0,0.0,0.0]])
+                    fields = orc(pts)
+                    ans = orc(pts)
+                    for _ in ans.keys():
+                        ans[_] += 1.0
+                    ans['points'] = pts
+                    return ans
+                etr = hgtest.ExactTestRunner(test,mycode)
+                self.assertFalse( etr.test() )

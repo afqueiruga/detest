@@ -1,5 +1,6 @@
 # Parent class
 #import unittest as ut
+import numpy as np
 
 class TestRunner(): #ut.TestCase):
     """
@@ -16,8 +17,9 @@ class TestRunner(): #ut.TestCase):
 
     def calc_errors(self, oracle, estimate):
         errors = {}
-        for field in oracle.keys():
-            expected = oracle[field](estimate['points'])
+        orc = oracle(estimate['points'])
+        for field in orc.keys():
+            expected = orc[field]
             e = np.linalg.norm(estimate[field] - expected)\
                 / np.linalg.norm(expected)
             errors[field] = errors
