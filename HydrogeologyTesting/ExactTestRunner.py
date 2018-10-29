@@ -25,8 +25,8 @@ class ExactTestRunner(TestRunner):
             return ans #[ ans[k] for k in oracle.keys() ]
         estimate = runit(1.0,1.0)
         errors = self.calc_errors(oracle, estimate)
-        print(estimate)
-        print(errors)
+        #print(estimate)
+        #print(errors)
         for k,v in errors.iteritems():
             if v>1.0e-15:
                 print("Failed test key ",k,": error was ",v,".")

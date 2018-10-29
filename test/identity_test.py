@@ -5,12 +5,13 @@ import unittest as ut
 
 problems = [
     hgtest.mechanics_constant,
+    hgtest.poromechanics_constant,
     hgtest.terzaghi,
 ]
 
 class IdentityTest(ut.TestCase):
     def test_identity(self):
-        " Make sure the oracles pass the tests "
+        " Make sure the oracles themselves pass the tests "
         for problem in problems:
             for test in problem.tests:
                 def mycode(params, h,dt):
@@ -25,13 +26,13 @@ class IdentityTest(ut.TestCase):
                 self.assertTrue( etr.test() )
                 
     def test_wrong(self):
-        " Make sure the test says its wrong for all of them "
+        " Make sure the test says its wrong for a messed up oracle "
         for problem in problems:
             for test in problem.tests:
                 def mycode(params, h,dt):
                     " An gaurunteed wrong code "
                     orc = test(params)
-                    pts = np.array([[0.0,0.0,0.0]])
+                    pts = np.random.rand( 10, orc.ptdim )
                     fields = orc(pts)
                     ans = orc(pts)
                     for _ in ans.keys():
@@ -40,3 +41,4 @@ class IdentityTest(ut.TestCase):
                     return ans
                 etr = hgtest.ExactTestRunner(test,mycode)
                 self.assertFalse( etr.test() )
+
