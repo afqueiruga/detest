@@ -22,12 +22,12 @@ class ExactTestRunner(TestRunner):
         def runit(h,dt):
             ans = self.script(params,h,dt)
             errors = self.calc_errors(oracle,ans)
-            return [ ans[k] for k in oracle.keys() ]
+            return ans #[ ans[k] for k in oracle.keys() ]
         estimate = runit(1.0,1.0)
         errors = self.calc_errors(oracle, estimate)
         for k,v in errors.iteritems():
             if v>1.0e-15:
-                print("Failed test ",test," for key ",k)
+                print("Failed test key ",k)
                 passed = False
         return passed
 

@@ -49,7 +49,7 @@ class Shear():
         Load = params['Load']
         self.eps = Load / G
         self.sigxx = self.sigyy = self.sigzz = 0.0
-        self.sigxy_anal = Load
+        self.sigxy = Load
 
     def __call__(self, x):
         return {'eps':np.array([[0.0,self.eps,0.0],
