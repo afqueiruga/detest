@@ -23,7 +23,7 @@ class TestRunner(): #ut.TestCase):
             expected = orc[field]
             e = np.linalg.norm(estimate[field] - expected)\
                 / regularized(np.linalg.norm(expected))
-            errors[field] = errors
+            errors[field] = e
         return errors
 
     def test(self):
