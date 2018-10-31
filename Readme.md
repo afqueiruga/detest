@@ -6,20 +6,30 @@ Lawrence Berkeley National Lab
 
 This repository contains a set of testing problems with known analytical solutions or reference solutions from a "trusted" code. (Note: Sometimes tests are wrong!)
 
-These tests were originally written to test TOUGH+Millstone and HGMiv.
+These tests were originally written to test TOUGH+Millstone, HGMiv, and [Periflakes]().
 
 ## Introduction
 
-Testing numerical scientific and engineering codes has a further challenge than normal software. The results are inexact and the expected behavior can be unknown. The philosophy I have evolved has the following phases:
+Testing numerical scientific and engineering codes has a further challenge than normal software. The results are inexact and the expected behavior can be unknown. When we see something wrong with out codes, we don't know if it's a problem with:
+
+1. a bug in the code?
+2. a failure of the numerical model?
+3. a fundamental problem with the underlying theory?
+4. or incorrect expectations?
+
+We address bullet point #4 by providing a trusted set of analytical solutions to be oracles. We can use these, as well as descriptions of the behavior we expect to see from certain codes, to help us diagnose issues #1-#3.
+
+The philosophy I have evolved has the following phases:
 
 1. Unit Tests - make sure the code works
 2. Exact Precision Tests - the numerical algorithm gets these **Exactly Correct** to known solutions
-3. Known Analytical Tests - tests with known solutions, but we have to discretize to get to them.
-4. Reference Tests - tests with no known solutions, but we compare the codes to an over-discretized trusted code.
+3. Known Analytical Tests - tests with known solutions, but the numerical algorithm only approximates the solution approach at an expected convergence rate
+4. Reference Tests - tests with no known solutions, but we compare the codes to an over-discretized trusted code, or experimental data
+
 
 ### Unit Tests
 
-These are software tests. These tests are for things on the order of "Does the code read an input file correctly?". This repository doesn't deal with them, they're unique to the codebase
+These are software tests. These tests are for things on the order of "Does the code read an input file correctly?" This repository doesn't deal with them, they're unique to the codebase.
 
 ### Exact Precision Tests
 
@@ -32,12 +42,20 @@ This library will generate a unittest object for requested exact precision tests
 These problems should also have the property that they are Lipschitz continuous; i.e. the numerical problem should converge smoothly.
 
 These require more computational effort to run.
+There is some advice for designing simple problems that the testee should be able to execute extremely quickly.
 
 ### Reference Solution Tests
 
 We assume self similarity.
 
-What happens when one of these tests isn't Lipschitz continuous? What if the physics itself has bifurcation points? How do we verify in that case?
+We can construct a reference solution by saving the solutions of a "golden code" in the database, and then comparing future codes to it.
+
+What happens when one of these tests isn't Lipschitz continuous? What if the physics itself has bifurcation points?
+How do we verify a code that is supposed to be solving a nonsmooth problem?
+These are hard problems to solve.
+A strategy is to examine ergodic properties, such as the center point of an attractor, the total amount of gas in the reservoir, the granular temperature of the system, etc.
+These have to be coupled by making your code solve the simpler problems, too.
+Currently, we have no such tests in this package.
 
 ## The Tests
 
