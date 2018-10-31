@@ -19,7 +19,7 @@ class NumericalTestRunner(TestRunner):
     def __init__(self, problem, script, expected_order,h_path=None,scratch_space = None):
         self.expected_order = expected_order
         if h_path is None:
-            h_path = np.linspace(0.1,2.0, 10)
+            h_path = np.linspace(0.1,2.0, 20)
         self.h_path = h_path
         TestRunner.__init__(self,problem,script,scratch_space)
         
@@ -53,7 +53,8 @@ class NumericalTestRunner(TestRunner):
             es = self.field_errors[k]
             order = rate(es[:,0],es[:,1])
             self.field_orders[k] = order
-            if np.abs(order-self.expected_order) > 1.0e-4:
+            # TODO check if nan: that means exact
+            if np.abs(order-self.expected_order) > 5.0e-2:
                 passed=False
         return passed
 
@@ -67,8 +68,8 @@ class NumericalTestRunner(TestRunner):
             plt.show()
 
     def print_report(self):
-        for h,_,errors in self.raw:
-            print(h,": ",errors)
+        #for h,_,errors in self.raw:
+        #    print(h,": ",errors)
         for k in self.field_orders:
             print(k,": ",self.field_orders[k])
 

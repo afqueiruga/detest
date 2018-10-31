@@ -21,7 +21,8 @@ class ConvergenceTest(ut.TestCase):
                     fields = orc(pts)
                     ans = orc(pts)
                     for _ in ans.keys():
-                        ans[_] += np.linalg.norm(ans[_])*0.1*h
+                        ans[_] = ans[_]*(1.0+0.0001*h)
+                    #print ans
                     ans['points'] = pts
                     return ans
                 etr = hgtest.NumericalTestRunner(test,mycode, 1.0)
