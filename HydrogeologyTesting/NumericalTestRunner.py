@@ -1,3 +1,4 @@
+from __future__ import print_function
 import numpy as np
 import scipy
 from SimDataDB import SimDataDB
@@ -14,12 +15,11 @@ class NumericalTestRunner(TestRunner):
     Give this clas one problem and one script, and it will run a _convergence_
     test on the code, automatically.
     """
-    def __init__(self, problem, script, expected_order,h_dt_path=None,scratch_space = None):
+    def __init__(self, problem, script, expected_order,h_path=None,scratch_space = None):
         self.expected_order = expected_order
-        if h_dt_path is None:
-            hs = np.linspace(0.5,2.0, 6)
-            h_dt_path = [ (_,1.0) for _ in hs ]
-        self.h_dt_path = h_dt_path
+        if h_path is None:
+            h_path = np.linspace(0.5,2.0, 6)
+        self.h_path = h_path
         TestRunner.__init__(self,problem,script,scratch_space)
         
     def run_cases(self, h_dt_path):
@@ -27,17 +27,17 @@ class NumericalTestRunner(TestRunner):
         params = oracle.params
         sdb = SimDataDB(self.cwd+"/errors.db")
         #@sdb.Decorate('test',
-        #             [('h','FLOAT'),('dt','FLOAT')],
+        #             [('h','FLOAT'),],
         #             [ (k,'ARRAY') for k in oracle.keys() ])
-        def runit(h,dt):
-            ans = self.script(params,h,dt)
+        def runit(h):
+            ans = self.script(params,h)
             errors = self.calc_errors(oracle,ans)
             return ans, errors
         # TODO this should be asynchronous
         self.raw = []
-        for h,dt in h_dt_path:
-            estimate,errors = runit(h,dt)
-            self.raw.append((h,dt,estimate,errors))
+        for h in self.h_path:
+            estimate,errors = runit(h)
+            self.raw.append((h,estimate,errors))
 
     def analyze_cases(self):
 
@@ -53,13 +53,12 @@ class NumericalTestRunner(TestRunner):
             plt.show()
 
     def print_report(self):
-        for t in tables:
-            print t
+        for h,_,errors in self.raw:
+            print(h,": ",errors)
 
     def test(self):
         passed = False
-        self.run_cases(self.h_dt_path)
-        print self.raw
+        self.run_cases(self.h_path)
         if False:
             self.plot_results()
         passed = self.analyze_cases()

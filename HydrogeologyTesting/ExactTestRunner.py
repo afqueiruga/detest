@@ -16,11 +16,11 @@ class ExactTestRunner(TestRunner):
         # TODO: randomized testing of parameters
         oracle = self.problem()
         params = oracle.params
-        def runit(h,dt):
-            ans = self.script(params,h,dt)
+        def runit(h):
+            ans = self.script(params,h)
             errors = self.calc_errors(oracle,ans)
             return ans, errors
-        estimate, errors = runit(1.0,1.0)
+        estimate, errors = runit(1.0)
         for k,v in errors.iteritems():
             if v>1.0e-15:
                 print("Failed test key ",k,": error was ",v,".")

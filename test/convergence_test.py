@@ -14,7 +14,7 @@ class ConvergenceTest(ut.TestCase):
         " Add an error equal to C * h^n and verify we get O(n)"
         for problem in problems:
             for test in problem.tests:
-                def mycode(params, h,dt):
+                def mycode(params, h):
                     " An exact code "
                     orc = test(params)
                     pts = np.random.rand( 10, orc.ptdim )
