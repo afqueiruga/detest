@@ -14,7 +14,7 @@ class IdentityTest(ut.TestCase):
         " Make sure the oracles themselves pass the tests "
         for problem in problems:
             for test in problem.tests:
-                def mycode(params, h,dt):
+                def mycode(params, h):
                     " An exact code "
                     orc = test(params)
                     pts = np.random.rand( 10, orc.ptdim )
@@ -29,7 +29,7 @@ class IdentityTest(ut.TestCase):
         " Make sure the test says its wrong for a messed up oracle "
         for problem in problems:
             for test in problem.tests:
-                def mycode(params, h,dt):
+                def mycode(params, h):
                     " An gaurunteed wrong code "
                     orc = test(params)
                     pts = np.random.rand( 10, orc.ptdim )
