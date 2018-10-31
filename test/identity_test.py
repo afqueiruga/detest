@@ -4,9 +4,9 @@ import numpy as np
 import unittest as ut
 
 problems = [
-    hgtest.mechanics_constant,
-    hgtest.poromechanics_constant,
-    hgtest.terzaghi,
+    hgtest.oracles.mechanics_constant,
+    hgtest.oracles.poroelastic_constant,
+    hgtest.oracles.terzaghi,
 ]
 
 class IdentityTest(ut.TestCase):
