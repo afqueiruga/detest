@@ -1,6 +1,7 @@
 from __future__ import print_function
 import numpy as np
-import scipy
+import scipy.stats
+from collections import defaultdict
 from SimDataDB import SimDataDB
 
 from TestRunner import TestRunner
@@ -18,7 +19,7 @@ class NumericalTestRunner(TestRunner):
     def __init__(self, problem, script, expected_order,h_path=None,scratch_space = None):
         self.expected_order = expected_order
         if h_path is None:
-            h_path = np.linspace(0.5,2.0, 6)
+            h_path = np.linspace(0.1,2.0, 10)
         self.h_path = h_path
         TestRunner.__init__(self,problem,script,scratch_space)
         
@@ -40,8 +41,21 @@ class NumericalTestRunner(TestRunner):
             self.raw.append((h,estimate,errors))
 
     def analyze_cases(self):
-
-        return False
+        self.field_errors = defaultdict(lambda : [])
+        for h,_,errors in self.raw:
+            for k,v in errors.iteritems():
+                self.field_errors[k].append( (h,v) )
+        for k in self.field_errors.keys():
+            self.field_errors[k] = np.array(self.field_errors[k])
+        passed=True
+        self.field_orders = {}
+        for k in self.field_errors:
+            es = self.field_errors[k]
+            order = rate(es[:,0],es[:,1])
+            self.field_orders[k] = order
+            if np.abs(order-self.expected_order) > 1.0e-4:
+                passed=False
+        return passed
 
     def plot_results(self):
         from matplotlib import pylab as plt
@@ -55,7 +69,10 @@ class NumericalTestRunner(TestRunner):
     def print_report(self):
         for h,_,errors in self.raw:
             print(h,": ",errors)
+        for k in self.field_orders:
+            print(k,": ",self.field_orders[k])
 
+            
     def test(self):
         passed = False
         self.run_cases(self.h_path)
