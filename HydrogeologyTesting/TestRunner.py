@@ -10,6 +10,7 @@ class TestRunner(): #ut.TestCase):
     def __init__(self, problem, script, scratch_space = None):
         self.problem = problem
         self.script = script
+        self.name = "exact_"+problem.name
         if scratch_space:
             self.cwd = scratch_space
         else:

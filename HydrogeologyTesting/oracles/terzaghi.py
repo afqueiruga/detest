@@ -25,6 +25,7 @@ default_parameters = {
 }
 
 class Terzaghi():
+    name = "Terzaghi"
     def __init__(self,params=default_parameters):
         self.space_dim = 1
         self.time_dep = True

@@ -17,8 +17,10 @@ default_parameters = {
 
 # They should be classes with __call__ methods, idiot.
 class Uniaxial():
+    name = "mechanics_constant_Uniaxial"    
     def __init__(self, params=default_parameters):
         # self.default_params = default_parameters
+
         self.space_dim = 3
         self.time_dep = False
         self.ptdim = 3
@@ -40,6 +42,7 @@ class Uniaxial():
                 'U':np.array([ [self.eps*_,0,0] for _ in x[:,0] ])
                 }
 class Shear():
+    name = "mechanics_constant_Shear"
     def __init__(self, params=default_parameters):
         self.space_dim = 3
         self.time_dep = False

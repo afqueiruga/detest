@@ -20,6 +20,7 @@ default_parameters = {
 }
 
 class UndrainedUniaxial():
+    name = "UndrainedUniaxial"
     def __init__(self, params=default_parameters):
         # self.default_params = default_parameters
         self.space_dim = 3
@@ -54,6 +55,7 @@ class UndrainedUniaxial():
                 }
 
 class UndrainedShear():
+    name = "UndrainedShear"
     def __init__(self, params=default_parameters):
         self.space_dim = 3
         self.time_dep = False

@@ -7,5 +7,5 @@ import unittest as ut
 
 class trivial(ut.TestCase):
     def test(self):
-        TestRunner.TestRunner(hgtest.oracles.mechanics_constant, lambda x:x)
-        TestRunner.TestRunner(hgtest.oracles.mechanics_constant, lambda x:x, scratch_space='foo')
+        TestRunner.TestRunner(hgtest.oracles.mechanics_constant.Uniaxial, lambda x:x)
+        TestRunner.TestRunner(hgtest.oracles.mechanics_constant.Uniaxial, lambda x:x, scratch_space='foo')
