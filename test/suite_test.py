@@ -16,7 +16,7 @@ def myTerzaghi(params, h):
 suite = [
     hgtest.ExactTestRunner(hgtest.oracles.mechanics_constant.Uniaxial, myUniaxial),
     hgtest.ExactTestRunner(hgtest.oracles.mechanics_constant.Shear,    myShear),
-    hgtest.NumericalTestRunner(hgtest.oracles.terzaghi.Terzaghi, myTerzaghi, 1),
+    hgtest.ConvergenceTestRunner(hgtest.oracles.terzaghi.Terzaghi, myTerzaghi, 1),
 ]
 
 

@@ -28,10 +28,3 @@ class ExactTestRunner(TestRunner):
                 passed = False
         return passed
 
-class ExactTestingSuite():
-    """
-    Initialize this class to run All of the Tests.
-    It works by populating the unittest framework.
-    """
-    def __init__(self, TESTS):
-        pass

@@ -25,5 +25,5 @@ class ConvergenceTest(ut.TestCase):
                     #print ans
                     ans['points'] = pts
                     return ans
-                etr = hgtest.NumericalTestRunner(test,mycode, 1.0)
+                etr = hgtest.ConvergenceTestRunner(test,mycode, 1.0)
                 self.assertTrue( etr.test() )
