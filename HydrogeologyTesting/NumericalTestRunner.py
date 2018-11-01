@@ -43,7 +43,8 @@ class NumericalTestRunner(TestRunner):
     def analyze_cases(self):
         self.field_errors = defaultdict(lambda : [])
         for h,_,errors in self.raw:
-            for k,v in errors.iteritems():
+            for k in errors:
+                v = errors[k]
                 self.field_errors[k].append( (h,v) )
         for k in self.field_errors.keys():
             self.field_errors[k] = np.array(self.field_errors[k])
