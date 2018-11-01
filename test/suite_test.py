@@ -7,7 +7,7 @@ import unittest as ut
 
 def myUniaxial(params, h):
     " An exact code "
-    orc = hgtest.oracles.mechanics_constant.Shear(params)
+    orc = hgtest.oracles.mechanics_constant.Uniaxial(params)
     pts = np.random.rand( 10, orc.ptdim )
     fields = orc(pts)
     ans = orc(pts)
@@ -42,9 +42,5 @@ suite = [
     hgtest.ConvergenceTestRunner(hgtest.oracles.terzaghi.Terzaghi, myTerzaghi, 1),
 ]
 
-
-#class Box(ut.TestCase):
-#    pass
-#hgtest.fill_suite(Box, suite)
 
 Box = hgtest.make_suite(suite)

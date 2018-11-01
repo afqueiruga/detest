@@ -14,12 +14,12 @@ from .ConvergenceTestRunner import ConvergenceTestRunner
 
 import unittest as ut
 
-def fill_suite(cls, suite):
-    for entry in suite:
-        setattr(cls, 'test_{0}'.format(entry.name), entry.test)
-        
 def make_suite(suite):
+    def make_test(test):
+        def fn(self):
+            return self.assertTrue(test())
+        return fn
     attrs = {
-        'test_'+e.name : e.test for e in suite
+        'test_'+e.name : make_test(e.test) for e in suite
     }
     return type('MySuite', (ut.TestCase,), attrs)
