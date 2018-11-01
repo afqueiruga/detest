@@ -2,9 +2,9 @@ from __future__ import print_function
 import numpy as np
 import scipy.stats
 from collections import defaultdict
-from SimDataDB import SimDataDB
+#from SimDataDB import SimDataDB
 
-from TestRunner import TestRunner
+from .TestRunner import TestRunner
 
 def rate(hs,es):
     " Calculate convergence rate "
@@ -26,7 +26,7 @@ class NumericalTestRunner(TestRunner):
     def run_cases(self, h_dt_path):
         oracle = self.problem()
         params = oracle.params
-        sdb = SimDataDB(self.cwd+"/errors.db")
+        #sdb = SimDataDB(self.cwd+"/errors.db")
         #@sdb.Decorate('test',
         #             [('h','FLOAT'),],
         #             [ (k,'ARRAY') for k in oracle.keys() ])

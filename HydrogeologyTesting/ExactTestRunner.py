@@ -1,5 +1,5 @@
 from __future__ import print_function
-from TestRunner import TestRunner
+from .TestRunner import TestRunner
 
 class ExactTestRunner(TestRunner):
     """
