@@ -9,7 +9,7 @@ problems = [
     hgtest.oracles.terzaghi,
 ]
 
-class IdentityTest(ut.TestCase):
+class Meta_IdentityTest(ut.TestCase):
     def test_identity(self):
         " Make sure the oracles themselves pass the tests "
         for problem in problems:

@@ -9,13 +9,13 @@ problems = [
     hgtest.oracles.terzaghi,
 ]
 
-class ConvergenceTest(ut.TestCase):
+class Meta_ConvergenceTest(ut.TestCase):
     def test_convergence(self):
         " Add an error equal to C * h^n and verify we get O(n)"
         for problem in problems:
             for test in problem.tests:
                 def mycode(params, h):
-                    " An exact code "
+                    " A precisely perturbed code "
                     orc = test(params)
                     pts = np.random.rand( 10, orc.ptdim )
                     fields = orc(pts)
