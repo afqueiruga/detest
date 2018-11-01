@@ -43,9 +43,8 @@ suite = [
 ]
 
 
-class Box(ut.TestCase):
-    pass
-hgtest.fill_suite(Box, suite)
+#class Box(ut.TestCase):
+#    pass
+#hgtest.fill_suite(Box, suite)
 
-
-#MyTests()
+Box = hgtest.make_suite(suite)

@@ -12,8 +12,14 @@ frequently.
 from .ExactTestRunner import ExactTestRunner
 from .ConvergenceTestRunner import ConvergenceTestRunner
 
-
+import unittest as ut
 
 def fill_suite(cls, suite):
     for entry in suite:
         setattr(cls, 'test_{0}'.format(entry.name), entry.test)
+        
+def make_suite(suite):
+    attrs = {
+        'test_'+e.name : e.test for e in suite
+    }
+    return type('MySuite', (ut.TestCase,), attrs)
