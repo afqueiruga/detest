@@ -26,10 +26,11 @@ default_parameters = {
 
 class Terzaghi():
     name = "Terzaghi"
+    space_dim = 1
+    time_dep = True
+    ptdim = 2
     def __init__(self,params=default_parameters):
-        self.space_dim = 1
-        self.time_dep = True
-        self.ptdim = 2
+        
         self.params = params
         # Yoink out the parameters
         K_d = params['K_d']
@@ -52,7 +53,7 @@ class Terzaghi():
         K_u = alpha**2*M + K_d
         a = 1.0/H#( 1.0 - 2.0*nu) / ( 2.0*G*(1.0-nu) )
         ai = 1.0/(K_u + 4.0*G/3.0)
-        
+
         p0 = alpha/H / ( 1.0/M + alpha**2/H) * Load
         Cf = (k_eta) / ( a * alpha**2.0 + 1.0/Q )
         uinf = a * Load * domH
@@ -73,7 +74,7 @@ class Terzaghi():
         self.P = P
         self.U = U
     def __call__(self, xt):
-        
+
         return {'P':self.P(xt[:,0],xt[:,1]),
                 'U':self.P(xt[:,0],xt[:,1])}
 

@@ -22,11 +22,13 @@ default_parameters = {
     'source':-1.0e5,
 }
 
-class Poisson():
+class SquarePoisson():
+    name = 'SquarePoisson'
+    space_dim = 2
+    time_dep = True
+    ptdim = 3
     def __init__(self,params=default_parameters):
-        self.space_dim = 2
-        self.time_dep = True
-        self.ptdim = 3
+
         self.params = params
         # Yoink out the parameters
         K_d = params['K_d']
@@ -42,7 +44,7 @@ class Poisson():
         nu = (3.0*K_d - 2.0*G)/(6.0*K_d+2.0*G)
 
         alpha = biot = 1.0 - K_d / K_s
-        
+
         M = K_s/(alpha-phi*(1.0-K_s/K_f))
 
 

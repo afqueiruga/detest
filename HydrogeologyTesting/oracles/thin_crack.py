@@ -18,7 +18,14 @@ parameters = {
     'Load':10.0,
 }
 
-def solution(params):
-    def U(x,u):
-        pass
-    return {'U':U}
+class ThinCrack():
+    name = "ThinCrack"
+    space_dim = 2
+    time_dep = False
+    ptdim = 2
+    def __init__(self,params):
+        def U(x,u):
+            pass
+        self.U = U
+    def __call__(self,x):
+        return {'U':U}
