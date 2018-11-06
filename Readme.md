@@ -22,33 +22,64 @@ We address bullet point #4 by providing a trusted set of analytical solutions to
 The philosophy I have evolved has the following phases:
 
 1. Unit Tests - make sure the code works
-2. Exact Precision Tests - the numerical algorithm gets these **Exactly Correct** to known solutions
-3. Known Analytical Tests - tests with known solutions, but the numerical algorithm only approximates the solution approach at an expected convergence rate
-4. Reference Tests - tests with no known solutions, but we compare the codes to an over-discretized trusted code, or experimental data
+2. Known Analytical Oracles - tests with known solutions. The code could either get these solutions exactly correct, or only approximates the solution approach at an expected convergence rate.
+3. Self-Similarity Convergence - Problems without known solutions, but the testee should behave consistently with itself.
+4. Reference Tests - tests with no known solutions, but we compare the codes to an over-discretized trusted code, or experimental data.
 
 
 ### Unit Tests
 
-These are software tests. These tests are for things on the order of "Does the code read an input file correctly?" This repository doesn't deal with them, they're unique to the codebase.
+These are software tests.
+These tests are for things on the order of "Does the code read an input file correctly?"
+This repository doesn't deal with them: they're unique to the codebase.
 
-### Exact Precision Tests
+### Oracle-based Exact Precision Tests
+
+The methods we use to solve problems should be able to get certain solutions **Exactly Correct**.
+
+\[
+assert\left( \left|\left| code - oracle \right|\right| < 10^{-12} \right)
+\]
 
 These can be done in the same unit testing framework. They should be cheap.
-
 This library will generate a unittest object for requested exact precision tests.
 
-### Known-Solution Analytical Tests
+### Oracle-based Convergence Tests
 
 These problems should also have the property that they are Lipschitz continuous; i.e. the numerical problem should converge smoothly.
 
 These require more computational effort to run.
 There is some advice for designing simple problems that the testee should be able to execute extremely quickly.
 
-### Reference Solution Tests
+This library will generate a unittest object for requested exact precision tests.
+
+\[
+e(h) = \left|\left| code(h) - oracle \right|\right|
+\]
+\[
+assert\left( regression(\log(h),\log(e)) \approx rate \right)
+\]
+
+
+### Self-Similarity Convergence Tests
 
 We assume self similarity.
 
+\[
+e(h) = \left|\left| code(h) - code(H^*) \right|\right|
+\]
+where $H^*\ll h$ .
+\[
+assert\left( regression(\log(h),\log(e)) \approx rate \right)
+\]
+
+### Reference Tests
+
 We can construct a reference solution by saving the solutions of a "golden code" in the database, and then comparing future codes to it.
+
+### Regression Tests
+
+## What makes a good test?
 
 What happens when one of these tests isn't Lipschitz continuous? What if the physics itself has bifurcation points?
 How do we verify a code that is supposed to be solving a nonsmooth problem?
@@ -57,30 +88,37 @@ A strategy is to examine ergodic properties, such as the center point of an attr
 These have to be coupled by making your code solve the simpler problems, too.
 Currently, we have no such tests in this package.
 
+
 ## The Tests
 
 Right now, there are only solutions for poroelasticity and single-phase flow.
 
 - Exact problems:
+
   1. Constant strain modes in elasticity
   2. Constant flux flow
 
 - Numerical problems:
+
   1. Terzaghi's consolidation
   2. de Leeuw's consolidation
-  3. (M) Thin crack in tension / pressurized
+  3. Thin crack in tension / under pressure
   4. Poisson problem
   5. Radial production in a poroelastic system
 
 - Reference problems:
+
   1. None yet
 
-The units for default properties are all in SI. This strictly doesn't matter, but for some codes the properties are not inputs, but intrinsic to the formulation!
-
-The problems in the database each have their own module.
-Each module has a description, default parameter dictionary, and a solution routine.
-They solution routine returns a dictionary of closures. Each closure evaluates the analytical solution at a point that is some combination of $(x,y,z,t)$ for the given parameters.
+The problems in the library each have their own module.
+Each module has a description, default parameter dictionary, and at least one class that implements the solution.
+The class is meant to behave like a closure, where it is initialized with a parameter set and is callable.
+Each closure evaluates the analytical solution at a point that is some combination of $(x,y,z,t)$ for the given parameters.
 The module will have a default set of parameters.
+
+The units for default properties are all in SI.
+This strictly doesn't matter, but for some codes the properties are not inputs, but instead intrinsic to the theoretical formulation.
+
 
 ## Using the Test Suite
 
