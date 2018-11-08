@@ -64,10 +64,10 @@ class ElectricCurrentDAE():
     def __init__(self,params=default_parameters):
         self.params = params
     def __call__(self,t):
-        x = t
-        v = t
-        T = t
-        I = t
+        x = t.copy()
+        v = t.copy()
+        T = t.copy()
+        I = t.copy()
         return {'x':x,'v':v,'T':T,'I':I}
 
 tests = [Decay, Oscillator, ElectricCurrentDAE]

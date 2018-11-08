@@ -7,7 +7,7 @@ problems = [
     hgtest.oracles.mechanics_constant,
     hgtest.oracles.poroelastic_constant,
     hgtest.oracles.terzaghi,
-    # hgtest.oracles.odes,
+    hgtest.oracles.odes,
     hgtest.oracles.poroelastic_well,
 ]
 
