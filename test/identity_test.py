@@ -7,6 +7,7 @@ problems = [
     hgtest.oracles.mechanics_constant,
     hgtest.oracles.poroelastic_constant,
     hgtest.oracles.terzaghi,
+    hgtest.oracles.odes,
 ]
 
 class Meta_IdentityTest(ut.TestCase):
@@ -24,7 +25,7 @@ class Meta_IdentityTest(ut.TestCase):
                     return ans
                 etr = hgtest.ExactTestRunner(test,mycode)
                 self.assertTrue( etr.test() )
-                
+
     def test_wrong(self):
         " Make sure the test says its wrong for a messed up oracle "
         for problem in problems:
@@ -41,4 +42,3 @@ class Meta_IdentityTest(ut.TestCase):
                     return ans
                 etr = hgtest.ExactTestRunner(test,mycode)
                 self.assertFalse( etr.test() )
-

@@ -1,1 +1,2 @@
-from . import mechanics_constant, poroelastic_constant, terzaghi, poroelastic_well
+from . import mechanics_constant, poroelastic_constant, \
+              terzaghi, poroelastic_well, odes
