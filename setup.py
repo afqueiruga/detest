@@ -1,5 +1,5 @@
 import os
-from setuptools import setup
+from setuptools import setup, find_packages
 
 def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
@@ -11,7 +11,8 @@ setup(
     description = "",
     license = "none",
     keywords = "",
-    packages=['HydrogeologyTesting'],
+    # packages=['HydrogeologyTesting'],
+    packages = find_packages(exclude=['test']),
     test_suite='test',
     long_description=read('Readme.md'),
     classifiers=[],

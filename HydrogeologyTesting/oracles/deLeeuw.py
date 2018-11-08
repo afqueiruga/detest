@@ -1,4 +1,4 @@
-alphaimport numpy as np
+import numpy as np
 
 """
 This file contains the analytical solution to de Leeuw's consolidation
