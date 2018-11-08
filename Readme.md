@@ -4,7 +4,7 @@ Alejandro Francisco Queiruga
 Lawrence Berkeley National Lab  
 2018
 
-This repository contains a set of testing problems with known analytical solutions or reference solutions from a "trusted" code. (Note: Sometimes tests are wrong!)
+This repository contains a set of testing problems with known analytical solutions or reference solutions from a "trusted" code.
 
 These tests were originally written to test TOUGH+Millstone, HGMiv, and [Periflakes]().
 
@@ -17,15 +17,16 @@ Testing numerical scientific and engineering codes has a further challenge than 
 3. a fundamental problem with the underlying theory?
 4. or incorrect expectations?
 
-We address bullet point #4 by providing a trusted set of analytical solutions to be oracles. We can use these, as well as descriptions of the behavior we expect to see from certain codes, to help us diagnose issues #1-#3.
-
-The philosophy I have evolved has the following phases:
+We address bullet point #4 by providing a trusted set of analytical solutions to be oracles in this library.
+The oracles (their theory, mathematical solution, and implementation) are verified by being in agreement with multiple codes!
+We can use these oracles and an understanding of the behavior we expect to see from our codes to help us diagnose issues #1-#3.
 
 1. Unit Tests - make sure the code works
 2. Known Analytical Oracles - tests with known solutions. The code could either get these solutions exactly correct, or only approximates the solution approach at an expected convergence rate.
 3. Self-Similarity Convergence - Problems without known solutions, but the testee should behave consistently with itself.
 4. Reference Tests - tests with no known solutions, but we compare the codes to an over-discretized trusted code, or experimental data.
 
+The philosophy I have evolved has the following phases:
 
 ### Unit Tests
 
@@ -56,10 +57,12 @@ This library will generate a unittest object for requested exact precision tests
 \[
 e(h) = \left|\left| code(h) - oracle \right|\right|
 \]
+
 \[
 assert\left( regression(\log(h),\log(e)) \approx rate \right)
 \]
 
+for an expected rate.
 
 ### Self-Similarity Convergence Tests
 
@@ -68,7 +71,9 @@ We assume self similarity.
 \[
 e(h) = \left|\left| code(h) - code(H^*) \right|\right|
 \]
-where $H^*\ll h$ .
+
+where $H^*\ll h$.
+
 \[
 assert\left( regression(\log(h),\log(e)) \approx rate \right)
 \]
@@ -78,6 +83,20 @@ assert\left( regression(\log(h),\log(e)) \approx rate \right)
 We can construct a reference solution by saving the solutions of a "golden code" in the database, and then comparing future codes to it.
 
 ### Regression Tests
+
+Running all of the above tests can be costly.
+Most of our everyday programming shouldn't effect the results for most of the codes capabilities.
+After a set of changes, we should assert
+
+
+\[
+assert\left( code(today) \approx code(yesterday) \right)
+\]
+
+for every problem we don't think we changed.
+These can be very fast and short, and randomly generated every day.
+
+hgtest will eventually have a class that runs these tests and maintains this history database.
 
 ## What makes a good test?
 
@@ -93,13 +112,10 @@ Currently, we have no such tests in this package.
 
 Right now, there are only solutions for poroelasticity and single-phase flow.
 
-- Exact problems:
+- Oracles:
 
   1. Constant strain modes in elasticity
   2. Constant flux flow
-
-- Numerical problems:
-
   1. Terzaghi's consolidation
   2. de Leeuw's consolidation
   3. Thin crack in tension / under pressure
@@ -135,12 +151,18 @@ where the developer is responsible for autogenerating their input files.
 
 ### Making an automated suite
 
-This library also contains tools for
+This library also contains tools for autogenerating a unittest suite.
+A snippet this short will populate the unittest framework:
 ```python
-hgt.ExactTestRunner([
-  (hgt.uniaxial, run_uniaxial),
-  (hgt.constant_flux, run_constant_flux),
-])
+suite = [
+    hgtest.ExactTestRunner(
+        hgtest.oracles.mechanics_constant.Uniaxial, myUniaxial),
+    hgtest.ExactTestRunner(
+        hgtest.oracles.mechanics_constant.Shear,    myShear),
+    hgtest.ConvergenceTestRunner(
+        hgtest.oracles.terzaghi.Terzaghi, myTerzaghi, 1),
+]
+MyTestSuite = hgtest.make_suite(suite)
 ```
 
 Running numerical tests is expensive in terms of computing time, which is also a dollar-cost.
