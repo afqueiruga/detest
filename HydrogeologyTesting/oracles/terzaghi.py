@@ -30,7 +30,7 @@ class Terzaghi():
     time_dep = True
     ptdim = 2
     def __init__(self,params=default_parameters):
-        
+
         self.params = params
         # Yoink out the parameters
         K_d = params['K_d']
@@ -76,7 +76,7 @@ class Terzaghi():
     def __call__(self, xt):
 
         return {'P':self.P(xt[:,0],xt[:,1]),
-                'U':self.P(xt[:,0],xt[:,1])}
+                'U':self.U(xt[:,0],xt[:,1])}
 
 
 tests = [Terzaghi]
