@@ -1,14 +1,14 @@
-import HydrogeologyTesting as hgtest
+import detest
 
 import numpy as np
 import unittest as ut
 
 problems = [
-    hgtest.oracles.mechanics_constant,
-    hgtest.oracles.poroelastic_constant,
-    hgtest.oracles.terzaghi,
-    hgtest.oracles.odes,
-    hgtest.oracles.poroelastic_well,
+    detest.oracles.mechanics_constant,
+    detest.oracles.poroelastic_constant,
+    detest.oracles.terzaghi,
+    detest.oracles.odes,
+    detest.oracles.poroelastic_well,
 ]
 
 class Meta_IdentityTest(ut.TestCase):
@@ -24,7 +24,7 @@ class Meta_IdentityTest(ut.TestCase):
                     ans = orc(pts)
                     ans['points'] = pts
                     return ans
-                etr = hgtest.ExactTestRunner(test,mycode)
+                etr = detest.ExactTestRunner(test,mycode)
                 self.assertTrue( etr.test() )
 
     def test_wrong(self):
@@ -41,5 +41,5 @@ class Meta_IdentityTest(ut.TestCase):
                         ans[_] += 1.0
                     ans['points'] = pts
                     return ans
-                etr = hgtest.ExactTestRunner(test,mycode)
+                etr = detest.ExactTestRunner(test,mycode)
                 self.assertFalse( etr.test() )

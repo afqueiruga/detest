@@ -1,12 +1,12 @@
-import HydrogeologyTesting as hgtest
+import detest
 
 import numpy as np
 import unittest as ut
 
 problems = [
-    hgtest.oracles.mechanics_constant,
-    hgtest.oracles.poroelastic_constant,
-    hgtest.oracles.terzaghi,
+    detest.oracles.mechanics_constant,
+    detest.oracles.poroelastic_constant,
+    detest.oracles.terzaghi,
 ]
 
 class Meta_ConvergenceTest(ut.TestCase):
@@ -25,5 +25,5 @@ class Meta_ConvergenceTest(ut.TestCase):
                     #print ans
                     ans['points'] = pts
                     return ans
-                etr = hgtest.ConvergenceTestRunner(test,mycode, 1.0)
+                etr = detest.ConvergenceTestRunner(test,mycode, 1.0)
                 self.assertTrue( etr.test() )

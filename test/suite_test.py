@@ -1,5 +1,4 @@
-import HydrogeologyTesting as hgtest
-
+import detest
 import numpy as np
 import unittest as ut
 
@@ -7,7 +6,7 @@ import unittest as ut
 
 def myUniaxial(params, h):
     " An exact code "
-    orc = hgtest.oracles.mechanics_constant.Uniaxial(params)
+    orc = detest.oracles.mechanics_constant.Uniaxial(params)
     pts = np.random.rand( 10, orc.ptdim )
     fields = orc(pts)
     ans = orc(pts)
@@ -16,7 +15,7 @@ def myUniaxial(params, h):
 
 def myShear(params, h):
     " An exact code "
-    orc = hgtest.oracles.mechanics_constant.Shear(params)
+    orc = detest.oracles.mechanics_constant.Shear(params)
     pts = np.random.rand( 10, orc.ptdim )
     fields = orc(pts)
     ans = orc(pts)
@@ -25,7 +24,7 @@ def myShear(params, h):
 
 def myTerzaghi(params, h):
     " A perturbed code "
-    orc = hgtest.oracles.terzaghi.Terzaghi(params)
+    orc = detest.oracles.terzaghi.Terzaghi(params)
     pts = np.random.rand( 10, orc.ptdim )
     fields = orc(pts)
     ans = orc(pts)
@@ -37,10 +36,10 @@ def myTerzaghi(params, h):
 
 
 suite = [
-    hgtest.ExactTestRunner(hgtest.oracles.mechanics_constant.Uniaxial, myUniaxial),
-    hgtest.ExactTestRunner(hgtest.oracles.mechanics_constant.Shear,    myShear),
-    hgtest.ConvergenceTestRunner(hgtest.oracles.terzaghi.Terzaghi, myTerzaghi, 1),
+    detest.ExactTestRunner(detest.oracles.mechanics_constant.Uniaxial, myUniaxial),
+    detest.ExactTestRunner(detest.oracles.mechanics_constant.Shear,    myShear),
+    detest.ConvergenceTestRunner(detest.oracles.terzaghi.Terzaghi, myTerzaghi, 1),
 ]
 
 
-Box = hgtest.make_suite(suite)
+Box = detest.make_suite(suite)

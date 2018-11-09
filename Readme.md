@@ -1,10 +1,13 @@
-# Hydrogeology Testing Suite
+# DETest
+
+A Differential Equation Testing Suite
 
 Alejandro Francisco Queiruga  
 Lawrence Berkeley National Lab  
 2018
 
-This repository contains a set of testing problems with known analytical solutions or reference solutions from a "trusted" code.
+This repository contains a set of testing problems with known analytical solutions or reference solutions from a "trusted" code: oracles.
+It can generate a testing framework based on Python's unittest test will automatically compare your code to these oracles, making sure on a variety of problems that your code are exactly correct, an approximation that converges at the expected rate, or at least gives you the same answer you got yesterday.
 
 These tests were originally written to test TOUGH+Millstone, HGMiv, and [Periflakes]().
 
@@ -96,7 +99,7 @@ assert\left( code(today) \approx code(yesterday) \right)
 for every problem we don't think we changed.
 These can be very fast and short, and randomly generated every day.
 
-hgtest will eventually have a class that runs these tests and maintains this history database.
+DETest will eventually have a class that runs these tests and maintains this history database.
 
 ## What makes a good test?
 
@@ -155,14 +158,14 @@ This library also contains tools for autogenerating a unittest suite.
 A snippet this short will populate the unittest framework:
 ```python
 suite = [
-    hgtest.ExactTestRunner(
-        hgtest.oracles.mechanics_constant.Uniaxial, myUniaxial),
-    hgtest.ExactTestRunner(
-        hgtest.oracles.mechanics_constant.Shear,    myShear),
-    hgtest.ConvergenceTestRunner(
-        hgtest.oracles.terzaghi.Terzaghi, myTerzaghi, 1),
+    detest.ExactTestRunner(
+        detest.oracles.mechanics_constant.Uniaxial, myUniaxial),
+    detest.ExactTestRunner(
+        detest.oracles.mechanics_constant.Shear,    myShear),
+    detest.ConvergenceTestRunner(
+        detest.oracles.terzaghi.Terzaghi, myTerzaghi, 1),
 ]
-MyTestSuite = hgtest.make_suite(suite)
+MyTestSuite = detest.make_suite(suite)
 ```
 
 Running numerical tests is expensive in terms of computing time, which is also a dollar-cost.
