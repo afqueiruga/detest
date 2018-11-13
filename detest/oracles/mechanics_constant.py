@@ -21,7 +21,10 @@ class Uniaxial():
     space_dim = 3
     time_dep = False
     ptdim = 3
-    def __init__(self, params=default_parameters):
+    def __init__(self, in_params=None):
+        params = default_parameters
+        if in_params:
+            params.update(in_params)
         self.params = params
         K_d  = params['K']
         G    = params['G']
@@ -44,10 +47,10 @@ class Shear():
     space_dim = 3
     time_dep = False
     ptdim = 3
-    def __init__(self, params=default_parameters):
-        self.space_dim = 3
-        self.time_dep = False
-        self.ptdim = 3
+    def __init__(self, in_params=None):
+        params = default_parameters
+        if in_params:
+            params.update(in_params)
         self.params = params
         K_d  = params['K']
         G    = params['G']

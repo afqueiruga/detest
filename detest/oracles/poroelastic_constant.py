@@ -21,11 +21,13 @@ default_parameters = {
 
 class UndrainedUniaxial():
     name = "UndrainedUniaxial"
-    def __init__(self, params=default_parameters):
-        # self.default_params = default_parameters
-        self.space_dim = 3
-        self.time_dep = False
-        self.ptdim = 3
+    space_dim = 3
+    time_dep = False
+    ptdim = 3
+    def __init__(self, in_params=None):
+        params = default_parameters
+        if in_params:
+            params.update(in_params)
         self.params = params
         K_d  = params['K_d']
         G    = params['G']
@@ -56,11 +58,15 @@ class UndrainedUniaxial():
 
 class UndrainedShear():
     name = "UndrainedShear"
-    def __init__(self, params=default_parameters):
-        self.space_dim = 3
-        self.time_dep = False
-        self.ptdim = 3
+    space_dim = 3
+    time_dep = False
+    ptdim = 3
+    def __init__(self, in_params=None):
+        params = default_parameters
+        if in_params:
+            params.update(in_params)
         self.params = params
+
         K_d  = params['K_d']
         G    = params['G']
         Load = params['Load']

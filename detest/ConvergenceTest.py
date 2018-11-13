@@ -16,15 +16,19 @@ class ConvergenceTest(TestRunner):
     Give this clas one problem and one script, and it will run a _convergence_
     test on the code, automatically.
     """
-    def __init__(self, problem, script, expected_order,h_path=None,scratch_space = None):
+    def __init__(self, problem, script, expected_order,
+                 params = None,
+                 h_path=None,scratch_space = None):
         self.expected_order = expected_order
         if h_path is None:
             h_path = np.linspace(0.1,2.0, 20)
         self.h_path = h_path
-        TestRunner.__init__(self,problem,script,scratch_space)
+        TestRunner.__init__(self,problem,script,
+                            params=params,
+                            scratch_space=scratch_space)
         
     def run_cases(self, h_dt_path):
-        oracle = self.problem()
+        oracle = self.problem(self.params)
         params = oracle.params
         #sdb = SimDataDB(self.cwd+"/errors.db")
         #@sdb.Decorate('test',
