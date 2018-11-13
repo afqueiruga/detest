@@ -25,5 +25,5 @@ class Meta_ConvergenceTest(ut.TestCase):
                     #print ans
                     ans['points'] = pts
                     return ans
-                etr = detest.ConvergenceTestRunner(test,mycode, 1.0)
+                etr = detest.ConvergenceTest(test,mycode, 1.0)
                 self.assertTrue( etr.test() )

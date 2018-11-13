@@ -36,9 +36,9 @@ def myTerzaghi(params, h):
 
 
 suite = [
-    detest.ExactTestRunner(detest.oracles.mechanics_constant.Uniaxial, myUniaxial),
-    detest.ExactTestRunner(detest.oracles.mechanics_constant.Shear,    myShear),
-    detest.ConvergenceTestRunner(detest.oracles.terzaghi.Terzaghi, myTerzaghi, 1),
+    detest.ExactTest(detest.oracles.mechanics_constant.Uniaxial, myUniaxial),
+    detest.ExactTest(detest.oracles.mechanics_constant.Shear,    myShear),
+    detest.ConvergenceTest(detest.oracles.terzaghi.Terzaghi, myTerzaghi, 1),
 ]
 
 

@@ -24,7 +24,7 @@ class Meta_IdentityTest(ut.TestCase):
                     ans = orc(pts)
                     ans['points'] = pts
                     return ans
-                etr = detest.ExactTestRunner(test,mycode)
+                etr = detest.ExactTest(test,mycode)
                 self.assertTrue( etr.test() )
 
     def test_wrong(self):
@@ -41,5 +41,5 @@ class Meta_IdentityTest(ut.TestCase):
                         ans[_] += 1.0
                     ans['points'] = pts
                     return ans
-                etr = detest.ExactTestRunner(test,mycode)
+                etr = detest.ExactTest(test,mycode)
                 self.assertFalse( etr.test() )

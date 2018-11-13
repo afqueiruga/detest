@@ -1,7 +1,7 @@
 from __future__ import print_function
 from .TestRunner import TestRunner
 
-class ExactTestRunner(TestRunner):
+class ExactTest(TestRunner):
     """
     Give this clas one problem and one script, and it will run it with a
     bunch of permutations and assert that the error is within machine

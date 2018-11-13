@@ -11,7 +11,7 @@ def rate(hs,es):
     return scipy.stats.linregress([np.log(h) for h in hs],
                                   [np.log(e) for e in es])[0]
 
-class ConvergenceTestRunner(TestRunner):
+class ConvergenceTest(TestRunner):
     """
     Give this clas one problem and one script, and it will run a _convergence_
     test on the code, automatically.

@@ -9,8 +9,8 @@ subsample set frequently, and then schedule the exhaustive tests less
 frequently.
 """
 
-from .ExactTestRunner import ExactTestRunner
-from .ConvergenceTestRunner import ConvergenceTestRunner
+from .ExactTest import ExactTest
+from .ConvergenceTest import ConvergenceTest
 
 import unittest as ut
 
