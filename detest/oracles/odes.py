@@ -24,6 +24,7 @@ class Decay():
     space_dim = 0
     time_dep = True
     ptdim = 1
+    outputs = ['u']
     def __init__(self,params=default_parameters):
         self.params = params
     def __call__(self,t):
@@ -41,6 +42,7 @@ class Oscillator():
     space_dim = 0
     time_dep = True
     ptdim = 1
+    outputs = ['x','v']
     def __init__(self,params=default_parameters):
         self.params = params
         self.omega = np.sqrt(self.params['k'] / self.params['m'])
@@ -61,6 +63,7 @@ class ElectricCurrentDAE():
     space_dim = 0
     time_dep = True
     ptdim = 1
+    outputs = ['x','v','T','I']
     def __init__(self,params=default_parameters):
         self.params = params
     def __call__(self,t):

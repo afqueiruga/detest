@@ -25,6 +25,7 @@ class PoroelasticWell():
     space_dim = 1
     time_dep = True
     ptdim = 2
+    outputs = ['P','U']
     def __init__(self,params=default_parameters):
         self.params = params
         # Yoink out the parameters

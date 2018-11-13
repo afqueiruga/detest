@@ -29,6 +29,7 @@ class Terzaghi():
     space_dim = 1
     time_dep = True
     ptdim = 2
+    outputs = ['P','U']
     def __init__(self,in_params=None):
         params = default_parameters
         if in_params:

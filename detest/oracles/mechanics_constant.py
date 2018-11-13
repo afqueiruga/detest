@@ -21,6 +21,7 @@ class Uniaxial():
     space_dim = 3
     time_dep = False
     ptdim = 3
+    outputs = ['eps','sigma','U']
     def __init__(self, in_params=None):
         params = default_parameters
         if in_params:
@@ -47,6 +48,7 @@ class Shear():
     space_dim = 3
     time_dep = False
     ptdim = 3
+    outputs = ['eps','sigma','U']
     def __init__(self, in_params=None):
         params = default_parameters
         if in_params:

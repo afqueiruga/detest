@@ -24,6 +24,7 @@ class SinglePhaseWell():
     time_dep = True
     ptdim = 2
     default_params = default_parameters
+    outputs = ['P']
     def __init__(self,in_params=None):
         params = self.default_params
         if in_params:
@@ -39,7 +40,7 @@ class SinglePhaseWell():
         Q_s = params['Q']
         #alpha = 1.0 - K_d/K_s
 
-        M = K_s/(-phi*(1.0-K_s/K_f))
+        M = K_f #?
         D = k_eta*M
 
         # TODO This is wrong
@@ -59,6 +60,7 @@ class SteadySinglePhaseWell():
     time_dep = False
     ptdim = 1
     default_params = default_parameters
+    outputs = ['P']
     def __init__(self,in_params=None):
         params = self.default_params
         if in_params:
