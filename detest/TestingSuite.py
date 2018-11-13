@@ -14,11 +14,17 @@ from .ConvergenceTest import ConvergenceTest
 
 import unittest as ut
 
-def make_suite(suite):
+def make_suite(suite, cwd=None):
+    # Inject the current working directory into them
+    if cwd:
+        for e in suite:
+            e.cwd = cwd
+    # A make a unittest classmethod
     def make_test(test):
         def fn(self):
             return self.assertTrue(test())
         return fn
+    # Fill out a new type and return it
     attrs = {
         'test_'+e.name : make_test(e.test) for e in suite
     }
