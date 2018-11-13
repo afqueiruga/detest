@@ -25,8 +25,14 @@ class Decay():
     time_dep = True
     ptdim = 1
     outputs = ['u']
-    def __init__(self,params=default_parameters):
-        self.params = params
+    default_parameters = {
+        'u0':1.0,
+        'T_max':10.0,
+        'k':1.0
+    }
+    def __init__(self,in_params=None):
+        self.params = self.default_parameters
+        if in_params: self.params.update(in_params)
     def __call__(self,t):
         u = - self.params['u0']*np.exp( self.params['k']*t)
         return {'u':u}
@@ -43,8 +49,13 @@ class Oscillator():
     time_dep = True
     ptdim = 1
     outputs = ['x','v']
-    def __init__(self,params=default_parameters):
-        self.params = params
+    default_parameters = {
+        'x0':1.0,'v0':0.0, 'T_max':10.0,
+        'm':1.0,'k':2.0,'f':0.0,
+    }
+    def __init__(self,in_params=None):
+        self.params = self.default_parameters
+        if in_params: self.params.update(in_params)
         self.omega = np.sqrt(self.params['k'] / self.params['m'])
         self.amplitude = self.params['x0'] # TODO
         self.phase = 0.0
