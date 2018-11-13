@@ -2,7 +2,7 @@ from __future__ import print_function
 import numpy as np
 import scipy.stats
 from collections import defaultdict
-#from SimDataDB import SimDataDB
+from SimDataDB import SimDataDB
 
 from .TestRunner import TestRunner
 
@@ -30,18 +30,18 @@ class ConvergenceTest(TestRunner):
     def run_cases(self, h_dt_path):
         oracle = self.problem(self.params)
         params = oracle.params
-        #sdb = SimDataDB(self.cwd+"/errors.db")
-        #@sdb.Decorate('test',
-        #             [('h','FLOAT'),],
-        #             [ (k,'ARRAY') for k in oracle.keys() ])
+
+        sdb = SimDataDB(self.cwd+"/conv_"+oracle.name+"_errors.db")
+        @sdb.Decorate('test',[('h','FLOAT'),],
+                      [('points','ARRAY')]+[ (k,'ARRAY') for k in oracle.outputs ], memoize=False)
         def runit(h):
             ans = self.script(params,h)
-            errors = self.calc_errors(oracle,ans)
-            return ans, errors
+            return ans
         # TODO this should be asynchronous
         self.raw = []
         for h in self.h_path:
-            estimate,errors = runit(h)
+            estimate = runit(h)
+            errors = self.calc_errors(oracle,estimate)
             self.raw.append((h,estimate,errors))
 
     def analyze_cases(self):
