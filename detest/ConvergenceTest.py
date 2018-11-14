@@ -77,12 +77,12 @@ class ConvergenceTest(TestRunner):
                 plt.figure()
                 for h,estimate,errors in self.raw:
                     y = estimate[f]
+                    if len(y.shape)>1:
+                        y = y[:,0]
                     x = estimate['points'][:,0]
                     if y.shape[0] != x.shape[0]:
                         continue
                     ind = np.argsort(x)
-                    print(y.shape)
-                    print(x.shape)
                     plt.plot(x[ind],y[ind],label='h='+str(h))
                 plt.legend()
                 plt.savefig(self.cwd+"/"+self.problem.name+"_"+f+"_contours.pdf")
