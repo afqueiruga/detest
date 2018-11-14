@@ -74,23 +74,22 @@ class ConvergenceTest(TestRunner):
         # sdb = SimDataDB(self.cwd+"/conv_"+oracle.name+"_errors.db")
         for f in self.problem.outputs:
             if self.raw[0][1][f].shape[0] == self.raw[0][1]['points'].shape[0]:
+                plt.close('all')
                 plt.figure()
                 for h,estimate,errors in self.raw:
                     y = estimate[f]
                     if len(y.shape)>1:
                         y = y[:,0]
                     x = estimate['points'][:,0]
-                    if y.shape[0] != x.shape[0]:
-                        continue
                     ind = np.argsort(x)
                     plt.plot(x[ind],y[ind],label='h='+str(h))
                 plt.legend()
                 plt.savefig(self.cwd+"/"+self.problem.name+"_"+f+"_contours.pdf")
-            # plt.figure()
-            # for m in methods:
-            #     plt.loglog(*e(t,m),**mykwargs(m))
-            # plt.legend()
-            # plt.show()
+            plt.figure()
+            plt.loglog(self.field_errors[f][:,0],
+                       self.field_errors[f][:,1],'+-')
+            plt.savefig(self.cwd+"/"+self.problem.name+"_"+f+"_error.pdf")
+
 
     def print_report(self):
         #for h,_,errors in self.raw:
@@ -102,8 +101,8 @@ class ConvergenceTest(TestRunner):
     def test(self):
         passed = False
         self.run_cases(self.h_path)
+        passed = self.analyze_cases()
         if True:
             self.plot_results()
-        passed = self.analyze_cases()
         self.print_report()
         return passed
