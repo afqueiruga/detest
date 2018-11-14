@@ -72,6 +72,7 @@ class ConvergenceTest(TestRunner):
         matplotlib.use('agg')
         from matplotlib import pylab as plt
         # sdb = SimDataDB(self.cwd+"/conv_"+oracle.name+"_errors.db")
+        # Make the contour plots
         for f in self.problem.outputs:
             if self.raw[0][1][f].shape[0] == self.raw[0][1]['points'].shape[0]:
                 plt.close('all')
@@ -85,10 +86,14 @@ class ConvergenceTest(TestRunner):
                     plt.plot(x[ind],y[ind],label='h='+str(h))
                 plt.legend()
                 plt.savefig(self.cwd+"/"+self.problem.name+"_"+f+"_contours.pdf")
-            plt.figure()
+        # Make a log log error plots
+
+        plt.figure()
+        for f in self.problem.outputs:
             plt.loglog(self.field_errors[f][:,0],
-                       self.field_errors[f][:,1],'+-')
-            plt.savefig(self.cwd+"/"+self.problem.name+"_"+f+"_error.pdf")
+                       self.field_errors[f][:,1],'+-',label=f)
+        plt.legend()
+        plt.savefig(self.cwd+"/"+self.problem.name+"_"+f+"_error.pdf")
 
 
     def print_report(self):
