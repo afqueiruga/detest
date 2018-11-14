@@ -18,11 +18,13 @@ class ConvergenceTest(TestRunner):
     """
     def __init__(self, problem, script, expected_order,
                  params = None,
-                 h_path=None,scratch_space = None):
+                 h_path=None,scratch_space = None,
+                 use_db=False):
         self.expected_order = expected_order
         if h_path is None:
             h_path = np.linspace(0.1,2.0, 20)
         self.h_path = h_path
+        self.use_db = use_db
         TestRunner.__init__(self,problem,script,
                             params=params,
                             scratch_space=scratch_space)
@@ -31,12 +33,15 @@ class ConvergenceTest(TestRunner):
         oracle = self.problem(self.params)
         params = oracle.params
 
-        sdb = SimDataDB(self.cwd+"/conv_"+oracle.name+"_errors.db")
-        @sdb.Decorate('test',[('h','FLOAT'),],
-                      [('points','ARRAY')]+[ (k,'ARRAY') for k in oracle.outputs ], memoize=False)
+
         def runit(h):
-            ans = self.script(params,h)
-            return ans
+            return self.script(params,h)
+        if self.use_db:
+            sdb = SimDataDB(self.cwd+"/conv_"+oracle.name+"_errors.db")
+            runit = sdb.Decorate('test',[('h','FLOAT'),],
+                                 [('points','ARRAY')]+[ (k,'ARRAY') for k in oracle.outputs ],
+                                 memoize=False)(runit)
+        
         # TODO this should be asynchronous
         self.raw = []
         for h in self.h_path:
