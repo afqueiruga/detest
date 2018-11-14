@@ -18,7 +18,7 @@ class ConvergenceTest(TestRunner):
     """
     def __init__(self, problem, script, expected_order,
                  params = None,
-                 h_path=None,scratch_space = None,
+                 h_path=None,scratch_space='./detest_report',
                  use_db=False):
         self.expected_order = expected_order
         if h_path is None:
@@ -28,12 +28,10 @@ class ConvergenceTest(TestRunner):
         TestRunner.__init__(self,problem,script,
                             params=params,
                             scratch_space=scratch_space)
-        
+
     def run_cases(self, h_dt_path):
         oracle = self.problem(self.params)
         params = oracle.params
-
-
         def runit(h):
             return self.script(params,h)
         if self.use_db:
@@ -41,7 +39,7 @@ class ConvergenceTest(TestRunner):
             runit = sdb.Decorate('test',[('h','FLOAT'),],
                                  [('points','ARRAY')]+[ (k,'ARRAY') for k in oracle.outputs ],
                                  memoize=False)(runit)
-        
+
         # TODO this should be asynchronous
         self.raw = []
         for h in self.h_path:
@@ -69,13 +67,30 @@ class ConvergenceTest(TestRunner):
         return passed
 
     def plot_results(self):
+        """ Make plots to generate a report """
+        import matplotlib
+        matplotlib.use('agg')
         from matplotlib import pylab as plt
-        for t in tables:
-            plt.figure()
-            for m in methods:
-                plt.loglog(*e(t,m),**mykwargs(m))
-            plt.legend()
-            plt.show()
+        # sdb = SimDataDB(self.cwd+"/conv_"+oracle.name+"_errors.db")
+        for f in self.problem.outputs:
+            if self.raw[0][1][f].shape[0] == self.raw[0][1]['points'].shape[0]:
+                plt.figure()
+                for h,estimate,errors in self.raw:
+                    y = estimate[f]
+                    x = estimate['points'][:,0]
+                    if y.shape[0] != x.shape[0]:
+                        continue
+                    ind = np.argsort(x)
+                    print(y.shape)
+                    print(x.shape)
+                    plt.plot(x[ind],y[ind],label='h='+str(h))
+                plt.legend()
+                plt.savefig(self.cwd+"/"+self.problem.name+"_"+f+"_contours.pdf")
+            # plt.figure()
+            # for m in methods:
+            #     plt.loglog(*e(t,m),**mykwargs(m))
+            # plt.legend()
+            # plt.show()
 
     def print_report(self):
         #for h,_,errors in self.raw:
@@ -83,13 +98,12 @@ class ConvergenceTest(TestRunner):
         for k in self.field_orders:
             print(k,": ",self.field_orders[k])
 
-            
+
     def test(self):
         passed = False
         self.run_cases(self.h_path)
-        if False:
+        if True:
             self.plot_results()
         passed = self.analyze_cases()
         self.print_report()
         return passed
-

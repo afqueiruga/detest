@@ -7,7 +7,7 @@ class TestRunner(): #ut.TestCase):
     Give this clas one problem and one script, and it will run a _convergence_
     test on the code, automatically.
     """
-    def __init__(self, problem, script, params = None, scratch_space = None):
+    def __init__(self, problem, script, params = None, scratch_space = './detest_report'):
         self.problem = problem
         self.script = script
         self.name = "exact_"+problem.name

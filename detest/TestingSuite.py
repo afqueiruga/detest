@@ -14,11 +14,10 @@ from .ConvergenceTest import ConvergenceTest
 
 import unittest as ut
 
-def make_suite(suite, cwd=None):
+def make_suite(suite, cwd='./detest_report/'):
     # Inject the current working directory into them
-    if cwd:
-        for e in suite:
-            e.cwd = cwd
+    for e in suite:
+        e.cwd = cwd
     # A make a unittest classmethod
     def make_test(test):
         def fn(self):
