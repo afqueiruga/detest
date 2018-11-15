@@ -30,21 +30,21 @@ class ConvergenceTest(TestRunner):
                             scratch_space=scratch_space)
 
     def run_cases(self, h_dt_path):
-        oracle = self.problem(self.params)
-        params = oracle.params
+        self.oracle = self.problem(self.params)
+        params = self.oracle.params
         def runit(h):
             return self.script(params,h)
         if self.use_db:
-            sdb = SimDataDB(self.cwd+"/conv_"+oracle.name+"_errors.db")
+            sdb = SimDataDB(self.cwd+"/conv_"+self.oracle.name+"_errors.db")
             runit = sdb.Decorate('test',[('h','FLOAT'),],
-                                 [('points','ARRAY')]+[ (k,'ARRAY') for k in oracle.outputs ],
+                                 [('points','ARRAY')]+[ (k,'ARRAY') for k in self.oracle.outputs ],
                                  memoize=False)(runit)
 
         # TODO this should be asynchronous
         self.raw = []
         for h in self.h_path:
             estimate = runit(h)
-            errors = self.calc_errors(oracle,estimate)
+            errors = self.calc_errors(self.oracle,estimate)
             self.raw.append((h,estimate,errors))
 
     def analyze_cases(self):
@@ -71,23 +71,26 @@ class ConvergenceTest(TestRunner):
         import matplotlib
         matplotlib.use('agg')
         from matplotlib import pylab as plt
-        # sdb = SimDataDB(self.cwd+"/conv_"+oracle.name+"_errors.db")
+        # sdb = SimDataDB(self.cwd+"/conv_"+self.oracle.name+"_errors.db")
         # Make the contour plots
         for f in self.problem.outputs:
             if self.raw[0][1][f].shape[0] == self.raw[0][1]['points'].shape[0]:
                 plt.close('all')
                 plt.figure()
+                # Plot each sample
                 for h,estimate,errors in self.raw:
                     y = estimate[f]
                     if len(y.shape)>1:
                         y = y[:,0]
                     x = estimate['points'][:,0]
                     ind = np.argsort(x)
-                    plt.plot(x[ind],y[ind],label='h='+str(h))
+                    plt.plot(x[ind],y[ind],'-+',label='h='+str(h),markevery=0.1)
+                # Plot the oracle
+                yo = self.oracle( estimate['points'] )[f]
+                plt.plot(x,yo,'--',label='oracle')
                 plt.legend()
                 plt.savefig(self.cwd+"/"+self.problem.name+"_"+f+"_contours.pdf")
         # Make a log log error plots
-
         plt.figure()
         for f in self.problem.outputs:
             plt.loglog(self.field_errors[f][:,0],
