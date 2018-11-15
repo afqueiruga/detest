@@ -40,7 +40,7 @@ class SinglePhaseWell():
         Q_s = params['Q']
         #alpha = 1.0 - K_d/K_s
 
-        M = K_f #?
+        M = K_f/phi #?
         D = k_eta*M
 
         # TODO This is wrong
