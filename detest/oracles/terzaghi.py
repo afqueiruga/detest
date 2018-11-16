@@ -22,6 +22,7 @@ default_parameters = {
 
     'H':100.0,
     'Load':-1.0e5,
+    'P_background':0.0,
 }
 
 class Terzaghi():
@@ -42,7 +43,7 @@ class Terzaghi():
         K_f = params['K_f']
         phi = params['phi']
         k_eta = params['k']/params['eta']
-
+        P_back = params['P_background']
         domH = params['H']
         Load = params['Load']
 
@@ -66,7 +67,7 @@ class Terzaghi():
             term = lambda m, z,t : 1.0/(2.0*m+1.0) \
                    * np.exp( - ((2.0*m+1.0)*np.pi/(2.0*domH))**2 * Cf * t ) \
                    * np.sin( (2.0*m+1.0)*np.pi/(2.0*domH) * z )
-            return 4.0/np.pi* p0 * np.sum( [term(m, z,t) for m in np.arange(0.0,30.0) ],axis=0)
+            return P_back + 4.0/np.pi* p0 * np.sum( [term(m, z,t) for m in np.arange(0.0,30.0) ],axis=0)
 
         def U(z,t):
             term = lambda m, z,t : 1.0/(2.0*m+1.0)**2 \
