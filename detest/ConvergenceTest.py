@@ -19,7 +19,7 @@ class ConvergenceTest(TestRunner):
     def __init__(self, problem, script, expected_order,
                  params = None,
                  h_path=None,scratch_space='./detest_report',
-                 extra_name='',
+                 extra_name='',report=False,
                  use_db=False):
         self.expected_order = expected_order
         if h_path is None:
@@ -112,7 +112,7 @@ class ConvergenceTest(TestRunner):
         passed = False
         self.run_cases(self.h_path)
         passed = self.analyze_cases()
-        if True:
+        if self.report:
             self.plot_results()
-        self.print_report()
+            self.print_report()
         return passed
