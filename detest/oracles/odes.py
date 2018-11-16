@@ -34,7 +34,7 @@ class Decay():
         self.params = self.default_parameters
         if in_params: self.params.update(in_params)
     def __call__(self,t):
-        u = - self.params['u0']*np.exp( self.params['k']*t)
+        u = self.params['u0']*np.exp( -self.params['k']*t)
         return {'u':u}
 
 class Oscillator():
