@@ -19,6 +19,7 @@ class ConvergenceTest(TestRunner):
     def __init__(self, problem, script, expected_order,
                  params = None,
                  h_path=None,scratch_space='./detest_report',
+                 extra_name='',
                  use_db=False):
         self.expected_order = expected_order
         if h_path is None:
@@ -27,7 +28,8 @@ class ConvergenceTest(TestRunner):
         self.use_db = use_db
         TestRunner.__init__(self,problem,script,
                             params=params,
-                            scratch_space=scratch_space)
+                            scratch_space=scratch_space,
+                            extra_name=extra_name)
 
     def run_cases(self, h_dt_path):
         self.oracle = self.problem(self.params)
@@ -35,7 +37,7 @@ class ConvergenceTest(TestRunner):
         def runit(h):
             return self.script(params,h)
         if self.use_db:
-            sdb = SimDataDB(self.cwd+"/conv_"+self.oracle.name+"_errors.db")
+            sdb = SimDataDB(self.cwd+"/conv_"+self.name+"_errors.db")
             runit = sdb.Decorate('test',[('h','FLOAT'),],
                                  [('points','ARRAY')]+[ (k,'ARRAY') for k in self.oracle.outputs ],
                                  memoize=False)(runit)
@@ -82,21 +84,21 @@ class ConvergenceTest(TestRunner):
                     y = estimate[f]
                     if len(y.shape)>1:
                         y = y[:,0]
-                    x = estimate['points'][:,0]
+                    x = estimate['points'][:,-1]
                     ind = np.argsort(x)
                     plt.plot(x[ind],y[ind],'-+',label='h='+str(h),markevery=0.1)
                 # Plot the oracle
                 yo = self.oracle( estimate['points'] )[f]
                 plt.plot(x,yo,'--',label='oracle')
                 plt.legend()
-                plt.savefig(self.cwd+"/"+self.problem.name+"_"+f+"_contours.pdf")
+                plt.savefig(self.cwd+"/"+self.name+"_"+f+"_contours.pdf")
         # Make a log log error plots
         plt.figure()
         for f in self.problem.outputs:
             plt.loglog(self.field_errors[f][:,0],
                        self.field_errors[f][:,1],'+-',label=f)
         plt.legend()
-        plt.savefig(self.cwd+"/"+self.problem.name+"_"+f+"_error.pdf")
+        plt.savefig(self.cwd+"/"+self.name+"_"+f+"_error.pdf")
 
 
     def print_report(self):
