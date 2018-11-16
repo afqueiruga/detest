@@ -1,2 +1,10 @@
 *~
 *.pyc
+*.egg-info
+build
+dist
+.DS_Store
+
+*.db
+*.png
+*.pdf
