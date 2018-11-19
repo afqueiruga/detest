@@ -40,7 +40,7 @@ class UndrainedUniaxial():
         M = K_s/(alpha-phi*(1.0-K_s/K_f))
         K_u = alpha**2*M + K_d
         H = (K_d+4.0*G/3.0)
-        
+
         self.P0 = alpha/H / ( 1.0/M + alpha**2/H) * Load
         self.eps = Load / (K_u + 4.0*G/3.0)
         self.sigyy = Load
@@ -54,7 +54,7 @@ class UndrainedUniaxial():
                                   [self.sigxy,self.sigyy,0.0],
                                   [0.0,  0.0,  self.sigzz]]),
                 'U':np.array([ [self.eps*_,0,0] for _ in x[:,0] ]),
-                'P':self.P0,
+                'P':np.array([ self.P0 for _ in x[:,0]]),
                 }
 
 class UndrainedShear():
@@ -84,7 +84,7 @@ class UndrainedShear():
                                   [self.sigxy,self.sigyy,0.0],
                                   [0.0,  0.0,  self.sigzz]]),
                 'U':np.array([ [0,self.eps*_,0] for _ in x[:,0] ]),
-                'P':0.0,
+                'P':np.zeros([x.shape[0]]),
         }
 
 def isotropic(parameters):
