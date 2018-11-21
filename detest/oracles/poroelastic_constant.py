@@ -17,6 +17,7 @@ default_parameters = {
     'phi':0.22,
 
     'Load':-1.0e5,
+    'P_background':0.0,
 }
 
 class UndrainedUniaxial():
@@ -24,7 +25,7 @@ class UndrainedUniaxial():
     space_dim = 3
     time_dep = False
     ptdim = 3
-    outputs = ['eps','sigma','U']
+    outputs = ['eps','sigma','U','P']
     def __init__(self, in_params=None):
         params = default_parameters
         if in_params:
@@ -36,24 +37,25 @@ class UndrainedUniaxial():
         K_s = params['K_s']
         phi = params['phi']
         Load = params['Load']
+        P_background = params['P_background']
         alpha = 1.0-K_d/K_s
         M = K_s/(alpha-phi*(1.0-K_s/K_f))
         K_u = alpha**2*M + K_d
         H = (K_d+4.0*G/3.0)
 
-        self.P0 = alpha/H / ( 1.0/M + alpha**2/H) * Load
+        self.P0 = -alpha/H / ( 1.0/M + alpha**2/H) * Load + P_background
         self.eps = Load / (K_u + 4.0*G/3.0)
         self.sigyy = Load
         self.sigxx = self.sigzz = Load * (3.0*K_u-2.0*G)/(3.0*K_u+4.0*G)
         self.sigxy = 0.0
     def __call__(self, x):
-        return {'eps':np.array([[self.eps,0.0,0.0],
-                                [0.0,0.0,0.0],
+        return {'eps':np.array([[0.0,0.0,0.0],
+                                [0.0,self.eps,0.0],
                                 [0.0,0.0,0.0]]),
                 'sigma':np.array([[self.sigxx,self.sigxy,0.0],
                                   [self.sigxy,self.sigyy,0.0],
                                   [0.0,  0.0,  self.sigzz]]),
-                'U':np.array([ [self.eps*_,0,0] for _ in x[:,0] ]),
+                'U':np.array([ [0,self.eps*_,0] for _ in x[:,1] ]),
                 'P':np.array([ self.P0 for _ in x[:,0]]),
                 }
 
@@ -62,7 +64,7 @@ class UndrainedShear():
     space_dim = 3
     time_dep = False
     ptdim = 3
-    outputs = ['eps','sigma','U']
+    outputs = ['eps','sigma','U','P']
     def __init__(self, in_params=None):
         params = default_parameters
         if in_params:

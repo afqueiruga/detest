@@ -35,13 +35,13 @@ class Uniaxial():
         self.sigxx = self.sigzz = Load * (3.0*K_d-2.0*G)/(3.0*K_d+4.0*G)
         self.sigxy = 0.0
     def __call__(self, x):
-        return {'eps':np.array([[self.eps,0.0,0.0],
-                                [0.0,0.0,0.0],
+        return {'eps':np.array([[0.0,0.0,0.0],
+                                [0.0,self.eps,0.0],
                                 [0.0,0.0,0.0]]),
                 'sigma':np.array([[self.sigxx,self.sigxy,0.0],
                                   [self.sigxy,self.sigyy,0.0],
                                   [0.0,  0.0,  self.sigzz]]),
-                'U':np.array([ [self.eps*_,0,0] for _ in x[:,0] ])
+                'U':np.array([ [0,self.eps*_,0] for _ in x[:,1] ])
                 }
 class Shear():
     name = "mechanics_constant_Shear"
