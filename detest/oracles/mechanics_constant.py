@@ -15,7 +15,6 @@ default_parameters = {
     'Load':-1.0e5,
 }
 
-# They should be classes with __call__ methods, idiot.
 class Uniaxial():
     name = "mechanics_constant_Uniaxial"
     space_dim = 3
@@ -43,6 +42,7 @@ class Uniaxial():
                                   [0.0,  0.0,  self.sigzz]]),
                 'U':np.array([ [0,self.eps*_,0] for _ in x[:,1] ])
                 }
+                
 class Shear():
     name = "mechanics_constant_Shear"
     space_dim = 3

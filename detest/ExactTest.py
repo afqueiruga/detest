@@ -14,7 +14,7 @@ class ExactTest(TestRunner):
     def test(self):
         passed = True
         # TODO: randomized testing of parameters
-        oracle = self.problem()
+        oracle = self.problem(self.params)
         params = oracle.params
         def runit(h):
             ans = self.script(params,h)
@@ -27,4 +27,3 @@ class ExactTest(TestRunner):
                 print("Failed test key ",k,": error was ",v,".")
                 passed = False
         return passed
-
