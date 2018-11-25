@@ -11,6 +11,15 @@ class ExactTest(TestRunner):
     There is an optional rigor parameter which controls just how far it will
     go.
     """
+    def __init__(self, problem, script, tolerance=1.0e-12,
+                params = None, extra_name='',report=False,
+                scratch_space=''):
+        self.tolerance = tolerance
+        TestRunner.__init__(self,problem,script,
+                            params=params,
+                            scratch_space=scratch_space,
+                            extra_name=extra_name)
+
     def test(self):
         passed = True
         # TODO: randomized testing of parameters
