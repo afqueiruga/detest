@@ -25,7 +25,7 @@ class UndrainedUniaxial():
     space_dim = 3
     time_dep = False
     ptdim = 3
-    outputs = ['eps','sigma','U','P']
+    outputs = ['sigma','U','P']
     def __init__(self, in_params=None):
         params = default_parameters
         if in_params:
@@ -46,12 +46,12 @@ class UndrainedUniaxial():
         self.P0 = -alpha/H / ( 1.0/M + alpha**2/H) * Load + P_background
         self.eps = Load / (K_u + 4.0*G/3.0)
         self.sigyy = Load - P_background
-        self.sigxx = self.sigzz = Load * (3.0*K_u-2.0*G)/(3.0*K_u+4.0*G) - alpha*P_background
+        self.sigxx = self.sigzz = (Load) * (3.0*K_u-2.0*G)/(3.0*K_u+4.0*G) - alpha*P_background
         self.sigxy = 0.0
     def __call__(self, x):
-        return {'eps':np.array([[0.0,0.0,0.0],
-                                [0.0,self.eps,0.0],
-                                [0.0,0.0,0.0]]),
+        return {#'eps':np.array([[0.0,0.0,0.0],
+                #                [0.0,self.eps,0.0],
+                #                [0.0,0.0,0.0]]),
                 'sigma':np.array([[self.sigxx,self.sigxy,0.0],
                                   [self.sigxy,self.sigyy,0.0],
                                   [0.0,  0.0,  self.sigzz]]),
@@ -64,7 +64,7 @@ class UndrainedShear():
     space_dim = 3
     time_dep = False
     ptdim = 3
-    outputs = ['eps','sigma','U','P']
+    outputs = ['sigma','U','P']
     def __init__(self, in_params=None):
         params = default_parameters
         if in_params:
@@ -79,9 +79,9 @@ class UndrainedShear():
         self.sigxy = Load
 
     def __call__(self, x):
-        return {'eps':np.array([[0.0,self.eps,0.0],
-                                [self.eps,0.0,0.0],
-                                [0.0,0.0,0.0]]),
+        return {#'eps':np.array([[0.0,self.eps,0.0],
+                #                [self.eps,0.0,0.0],
+                #                [0.0,0.0,0.0]]),
                 'sigma':np.array([[self.sigxx,self.sigxy,0.0],
                                   [self.sigxy,self.sigyy,0.0],
                                   [0.0,  0.0,  self.sigzz]]),

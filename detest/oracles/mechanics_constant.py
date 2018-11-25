@@ -20,7 +20,7 @@ class Uniaxial():
     space_dim = 3
     time_dep = False
     ptdim = 3
-    outputs = ['eps','sigma','U']
+    outputs = ['sigma','U']
     def __init__(self, in_params=None):
         params = default_parameters
         if in_params:
@@ -34,21 +34,21 @@ class Uniaxial():
         self.sigxx = self.sigzz = Load * (3.0*K_d-2.0*G)/(3.0*K_d+4.0*G)
         self.sigxy = 0.0
     def __call__(self, x):
-        return {'eps':np.array([[0.0,0.0,0.0],
-                                [0.0,self.eps,0.0],
-                                [0.0,0.0,0.0]]),
+        return {#'eps':np.array([[0.0,0.0,0.0],
+                #                [0.0,self.eps,0.0],
+                #                [0.0,0.0,0.0]]),
                 'sigma':np.array([[self.sigxx,self.sigxy,0.0],
                                   [self.sigxy,self.sigyy,0.0],
                                   [0.0,  0.0,  self.sigzz]]),
                 'U':np.array([ [0,self.eps*_,0] for _ in x[:,1] ])
                 }
-                
+
 class Shear():
     name = "mechanics_constant_Shear"
     space_dim = 3
     time_dep = False
     ptdim = 3
-    outputs = ['eps','sigma','U']
+    outputs = ['sigma','U']
     def __init__(self, in_params=None):
         params = default_parameters
         if in_params:
@@ -62,9 +62,9 @@ class Shear():
         self.sigxy = Load
 
     def __call__(self, x):
-        return {'eps':np.array([[0.0,self.eps,0.0],
-                                [self.eps,0.0,0.0],
-                                [0.0,0.0,0.0]]),
+        return {#'eps':np.array([[0.0,self.eps,0.0],
+                #                [self.eps,0.0,0.0],
+                #                [0.0,0.0,0.0]]),
                 'sigma':np.array([[self.sigxx,self.sigxy,0.0],
                                   [self.sigxy,self.sigyy,0.0],
                                   [0.0,  0.0,  self.sigzz]]),
