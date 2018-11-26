@@ -45,8 +45,10 @@ class UndrainedUniaxial():
 
         self.P0 = -alpha/H / ( 1.0/M + alpha**2/H) * Load + P_background
         self.eps = Load / (K_u + 4.0*G/3.0)
-        self.sigyy = Load - P_background
-        self.sigxx = self.sigzz = (Load) * (3.0*K_u-2.0*G)/(3.0*K_u+4.0*G) - alpha*P_background
+        sigyy_back = - P_background
+        sigxx_back = - alpha*P_background - (K_d-2.0/3.0*G)/(H) * (1.0-alpha)*P_background
+        self.sigyy = Load + sigyy_back
+        self.sigxx = self.sigzz = (Load) * (3.0*K_u-2.0*G)/(3.0*K_u+4.0*G) + sigxx_back
         self.sigxy = 0.0
     def __call__(self, x):
         return {#'eps':np.array([[0.0,0.0,0.0],
