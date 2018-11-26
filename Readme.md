@@ -2,8 +2,8 @@
 
 A Differential Equation Testing Suite
 
-Alejandro Francisco Queiruga  
-Lawrence Berkeley National Lab  
+Alejandro Francisco Queiruga
+Lawrence Berkeley National Lab
 2018
 
 This repository contains a set of testing problems with known analytical solutions or reference solutions from a "trusted" code: oracles.
@@ -145,7 +145,7 @@ The developer will need to wrap their code into a Python script.
 
 For a command line code, this will look something like this:
 ```python
-def runit(parameters, h,dt):
+def myScript(parameters, h,dt):
   make_tough_input(h,dt,parameters)
   sp.call(['TH','millstone_input.py',str(h),str(dt)])
   return process_results_for_testing()
@@ -158,18 +158,17 @@ This library also contains tools for autogenerating a unittest suite.
 A snippet this short will populate the unittest framework:
 ```python
 suite = [
-    detest.ExactTestRunner(
-        detest.oracles.mechanics_constant.Uniaxial, myUniaxial),
-    detest.ExactTestRunner(
-        detest.oracles.mechanics_constant.Shear,    myShear),
-    detest.ConvergenceTestRunner(
-        detest.oracles.terzaghi.Terzaghi, myTerzaghi, 1),
+    detest.ExactTest(      detest.oracles.Uniaxial, myUniaxial),
+    detest.ExactTest(      detest.oracles.Shear,    myShear),
+    detest.ConvergenceTest(detest.oracles.Terzaghi, myTerzaghi, 1),
 ]
 MyTestSuite = detest.make_suite(suite)
 ```
+The power of this architecture is that list can be generated with a loop.
+An example of this is in [afqsrungekutta](github.com/afqueiruga/afqsrungekutta),
+wherein a seperate ConvergenceTest for every each tableau is made.
 
 Running numerical tests is expensive in terms of computing time, which is also a dollar-cost.
-
 There are different strategies to minimize the cost:
 
 1. Only test randomly with frequency, and save the rigorous-churn through tests for weekly tests.
@@ -177,3 +176,5 @@ There are different strategies to minimize the cost:
 3. Schedule them for low-priority queues at a low-cost off-hours.
 
 ## License
+
+## Acknowledgements
