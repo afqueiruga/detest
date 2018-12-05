@@ -59,7 +59,7 @@ class Terzaghi():
         ai = 1.0/(K_u + 4.0*G/3.0)
 
         p0 = -alpha/H / ( 1.0/M + alpha**2/H) * Load
-        Cf = (k_eta) / ( a * alpha**2.0 + 1.0/Q )
+        Cf = (k_eta) / ( a * alpha**2.0 + 1.0/M )
         uinf = a * Load * domH
         pressure_mass = biot/K_d
 
