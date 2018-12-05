@@ -169,7 +169,7 @@ An example of this is in [afqsrungekutta](github.com/afqueiruga/afqsrungekutta),
 wherein a seperate ConvergenceTest for every each tableau is made.
 
 Running numerical tests is expensive in terms of computing time, which is also a dollar-cost.
-There are different strategies to minimize the cost:
+There are different strategies to minimize the cost and enable real-time continuous integration:
 
 1. Only test randomly with frequency, and save the rigorous-churn through tests for weekly tests.
 2. Use a scheduling environment to run tests in parallel on commodity resources.
