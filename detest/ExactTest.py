@@ -32,7 +32,7 @@ class ExactTest(TestRunner):
         estimate, errors = runit(1.0)
         for k in errors:
             v = errors[k]
-            if v>1.0e-15:
+            if v > self.tolerance:
                 print("Failed test key ",k,": error was ",v,".")
                 passed = False
         return passed
