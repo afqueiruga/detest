@@ -2,8 +2,8 @@
 
 A Differential Equation Testing Suite
 
-Alejandro Francisco Queiruga  
-Lawrence Berkeley National Lab  
+Alejandro Francisco Queiruga
+Lawrence Berkeley National Lab
 2018
 
 This repository contains a set of testing problems with known analytical solutions or reference solutions from a "trusted" code: oracles.
@@ -43,9 +43,10 @@ This repository doesn't deal with them: they're unique to the codebase.
 
 The methods we use to solve problems should be able to get certain solutions **Exactly Correct**.
 
-\[
+![assert](https://latex.codecogs.com/gif.latex?assert\left(&space;\left|\left|&space;code&space;-&space;oracle&space;\right|\right|&space;<&space;10^{-12}&space;\right))
+<!--\[
 assert\left( \left|\left| code - oracle \right|\right| < 10^{-12} \right)
-\]
+\]-->
 
 These can be done in the same unit testing framework. They should be cheap.
 This library will generate a unittest object for requested exact precision tests.
@@ -59,13 +60,15 @@ There is some advice for designing simple problems that the testee should be abl
 
 This library will generate a unittest object for requested exact precision tests.
 
-\[
+![error](https://latex.codecogs.com/gif.latex?e(h)&space;=&space;\left|\left|&space;code(h)&space;-&space;oracle&space;\right|\right|)
+<!--\[
 e(h) = \left|\left| code(h) - oracle \right|\right|
-\]
+\]-->
 
-\[
+![assert](https://latex.codecogs.com/gif.latex?assert\left(&space;regression(\log(h),\log(e))&space;\approx&space;rate&space;\right))
+<!-- \[
 assert\left( regression(\log(h),\log(e)) \approx rate \right)
-\]
+\] -->
 
 for an expected rate.
 
@@ -73,15 +76,17 @@ for an expected rate.
 
 We assume self similarity.
 
-\[
+![error](https://latex.codecogs.com/gif.latex?e(h)&space;=&space;\left|\left|&space;code(h)&space;-&space;code(H^*)&space;\right|\right|)
+<!-- \[
 e(h) = \left|\left| code(h) - code(H^*) \right|\right|
-\]
+\] -->
 
 where $H^*\ll h$.
 
-\[
+![assert](https://latex.codecogs.com/gif.latex?assert\left(&space;regression(\log(h),\log(e))&space;\approx&space;rate&space;\right))
+<!-- \[
 assert\left( regression(\log(h),\log(e)) \approx rate \right)
-\]
+\] -->
 
 ### Reference Tests
 
@@ -93,10 +98,10 @@ Running all of the above tests can be costly.
 Most of our everyday programming shouldn't effect the results for most of the codes capabilities.
 After a set of changes, we should assert
 
-
-\[
+![assert](https://latex.codecogs.com/gif.latex?assert\left(&space;code(today)&space;\approx&space;code(yesterday)&space;\right))
+<!-- \[
 assert\left( code(today) \approx code(yesterday) \right)
-\]
+\] -->
 
 for every problem we don't think we changed.
 These can be very fast and short, and randomly generated every day.
@@ -179,7 +184,7 @@ There are different strategies to minimize the cost and enable real-time continu
 
 ## License
 
-Copyright (C) Alejandro Francisco Queiruga, 2015-2018  
+Copyright (C) Alejandro Francisco Queiruga, 2015-2018
 Lawrence Berkeley National Lab
 
 DETest is released under version 3 of the GNU Lesser General Public License, as per LICENSE.txt.
