@@ -145,23 +145,38 @@ The module will have a default set of parameters.
 The units for default properties are all in SI.
 This strictly doesn't matter, but for some codes the properties are not inputs, but instead intrinsic to the theoretical formulation.
 
+## Installation
+
+detest is compatible with both Python 2 and 3. Numpy is required, and some of the oracles make use of Scipy and Sympy. Install it with setuptools,
+```bash
+python setup.py install --prefix=/path/to/install/to
+```
+and then import it with `import detest`.
 
 ## Using the Test Suite
 
-The developer will need to wrap their code into a Python script.
+### Wrapping the code
+
+The developer needs to wrap their code into a Python script with one function call for each oracle.
+The routine for your code takes two arguments: a dictionary of parameters, and an 'h' argument for discretization scale.
+The parameters a specific to the oracle problem (e.g. domain size, conductivity, etc.); read the description of the oracle.
+To check mesh refinement, 'h' will be a grid spacing or a timestep size. (I sometimes make it control both.)
+Detest will automatically call the script with a set of parameters with many different 'h's.
+The output is a dictionary that matches the field names of the oracle, plus an additional field 'points'.
 
 For a command line code, this will look something like this:
 ```python
-def myScript(parameters, h,dt):
-  make_tough_input(h,dt,parameters)
-  sp.call(['TH','millstone_input.py',str(h),str(dt)])
-  return process_results_for_testing()
+def myScript(parameters, h):
+  make_tough_input(h,parameters)
+  sp.call(['TH','millstone_input.py',str(h)])
+  x,U,P = process_results_for_testing()
+  return {'U':U,'P':P, 'points':x}
 ```
 where the developer is responsible for autogenerating their input files.
 
 ### Making an automated suite
 
-This library also contains tools for autogenerating a unittest suite.
+Detest will autogenerate a unittest suite.
 A snippet this short will populate the unittest framework:
 ```python
 suite = [
@@ -171,9 +186,26 @@ suite = [
 ]
 MyTestSuite = detest.make_suite(suite)
 ```
+The file can then be executed with the unittest module,
+```bash
+python -m unittest MyTestSuite.py
+```
 The power of this architecture is that list can be generated with a loop.
-An example of this is in [afqsrungekutta](github.com/afqueiruga/afqsrungekutta),
+An example of this is in [afqsrungekutta](https://github.com/afqueiruga/afqsrungekutta/blob/master/test/de_test.py),
 wherein a seperate ConvergenceTest for every each tableau is made.
+
+### Just using the oracles
+
+Detest is also a library of analytical solutions.
+One can just import the solutions if that's useful,
+```python
+import detest
+f = detest.oracles.Terzaghi({'k':2.0e-12})
+displacement = f([[5.0,10.0]])['U']
+```
+This is particularly useful for applying truncated boundary conditions for some of the convergence tests.
+
+### Computation Expensive Concerns
 
 Running numerical tests is expensive in terms of computing time, which is also a dollar-cost.
 There are different strategies to minimize the cost and enable real-time continuous integration:
