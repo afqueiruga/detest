@@ -2,18 +2,20 @@
 
 A Differential Equation Testing Suite
 
-Alejandro Francisco Queiruga
-Lawrence Berkeley National Lab
+Alejandro Francisco Queiruga  
+Lawrence Berkeley National Lab  
 2018
 
 This repository contains a set of testing problems with known analytical solutions or reference solutions from a "trusted" code: oracles.
 It can generate a testing framework based on Python's unittest test will automatically compare your code to these oracles, making sure on a variety of problems that your code are exactly correct, an approximation that converges at the expected rate, or at least gives you the same answer you got yesterday.
 
-These tests were originally written to test TOUGH+Millstone, HGMiv, and [Periflakes]().
+These tests were originally written to support Millstone, TOUGH+, HGMiv, and [Periflakes]().
 
 ## Introduction
 
-Testing numerical scientific and engineering codes has a further challenge than normal software. The results are inexact and the expected behavior can be unknown. When we see something wrong with out codes, we don't know if it's a problem with:
+Testing numerical scientific and engineering codes has a further challenge than normal software.
+The results are inexact and the expected behavior can be unknown.
+When we see something wrong with out codes, we don't know if it's a problem with:
 
 1. a bug in the code?
 2. a failure of the numerical model?
@@ -177,4 +179,11 @@ There are different strategies to minimize the cost and enable real-time continu
 
 ## License
 
+Copyright (C) Alejandro Francisco Queiruga, 2015-2018  
+Lawrence Berkeley National Lab
+
+DETest is released under version 3 of the GNU Lesser General Public License, as per LICENSE.txt.
+
 ## Acknowledgements
+
+This library was developed to support various projects in the Earth and Environmental Sciences division at Lawrence Berkeley National Lab.
