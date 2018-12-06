@@ -17,19 +17,15 @@ class ConvergenceTest(TestRunner):
     test on the code, automatically.
     """
     def __init__(self, problem, script, expected_order,
-                 params = None,
-                 h_path=None,scratch_space='./detest_report',
-                 extra_name='',report=False,
-                 use_db=False):
+                 h_path=None,
+                 use_db=False,
+                 **kwargs):
         self.expected_order = expected_order
         if h_path is None:
             h_path = np.linspace(0.1,2.0, 20)
         self.h_path = h_path
         self.use_db = use_db
-        TestRunner.__init__(self,problem,script,
-                            params=params,
-                            scratch_space=scratch_space,
-                            extra_name=extra_name)
+        TestRunner.__init__(self,problem,script,**kwargs)
 
     def run_cases(self, h_dt_path):
         self.oracle = self.problem(self.params)
@@ -75,6 +71,7 @@ class ConvergenceTest(TestRunner):
         from matplotlib import pylab as plt
         # sdb = SimDataDB(self.cwd+"/conv_"+self.oracle.name+"_errors.db")
         # Make the contour plots
+
         for f in self.problem.outputs:
             if self.raw[0][1][f].shape[0] == self.raw[0][1]['points'].shape[0]:
                 plt.close('all')
@@ -84,7 +81,7 @@ class ConvergenceTest(TestRunner):
                     y = estimate[f]
                     if len(y.shape)>1:
                         y = y[:,0]
-                    x = estimate['points'][:,-1]
+                    x = estimate['points'][:,self.report_cfg['idx']]
                     ind = np.argsort(x)
                     plt.plot(x[ind],y[ind],'-+',label='h='+str(h),markevery=0.1)
                 # Plot the oracle

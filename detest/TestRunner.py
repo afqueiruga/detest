@@ -8,7 +8,7 @@ class TestRunner(): #ut.TestCase):
     test on the code, automatically.
     """
     def __init__(self, problem, script, params=None,
-                 scratch_space='./detest_report', extra_name='', report=False):
+                 scratch_space='./detest_report', extra_name='', report=False,report_cfg={}):
         self.problem = problem
         self.script = script
         self.name = "exact_"+problem.name+('_'+extra_name+'_' if extra_name else '')
@@ -18,7 +18,11 @@ class TestRunner(): #ut.TestCase):
             self.cwd = scratch_space
         else:
             self.cwd = '.'
-
+        self.report_cfg = {
+            'idx':-1,
+        }
+        self.report_cfg.update(report_cfg)
+        
     def calc_errors(self, oracle, estimate):
         errors = {}
         orc = oracle(estimate['points'])
