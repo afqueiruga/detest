@@ -2,8 +2,8 @@
 
 A Differential Equation Testing Suite
 
-Alejandro Francisco Queiruga
-Lawrence Berkeley National Lab
+Alejandro Francisco Queiruga  
+Lawrence Berkeley National Lab  
 2018
 
 This repository contains a set of testing problems with known analytical solutions or reference solutions from a "trusted" code: oracles.
@@ -184,7 +184,7 @@ There are different strategies to minimize the cost and enable real-time continu
 
 ## License
 
-Copyright (C) Alejandro Francisco Queiruga, 2015-2018
+Copyright (C) Alejandro Francisco Queiruga, 2015-2018  
 Lawrence Berkeley National Lab
 
 DETest is released under version 3 of the GNU Lesser General Public License, as per LICENSE.txt.
