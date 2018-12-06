@@ -205,7 +205,7 @@ displacement = f([[5.0,10.0]])['U']
 ```
 This is particularly useful for applying truncated boundary conditions for some of the convergence tests.
 
-### Computation Expensive Concerns
+### Computation Expense Concerns
 
 Running numerical tests is expensive in terms of computing time, which is also a dollar-cost.
 There are different strategies to minimize the cost and enable real-time continuous integration:
