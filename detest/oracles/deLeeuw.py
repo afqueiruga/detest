@@ -24,42 +24,56 @@ parameters = {
 
     'R':10.0,
     'Load':-1.0e5,
+    'P_background':0.0,
 }
 
 
+class DeLeeuw():
+    name = "DeLeeuw"
+    space_dim = 1
+    time_dep = True
+    ptdim = 2
+    outputs = ['P','U']
+    def __init__(self, in_params=None):
+        params = default_parameters
+        if in_params:
+            params.update(in_params)
+        self.params = params
+        # Yoink out the parameters
+        K_d = params['K_d']
+        G = params['G']
+        K_s = params['K_s']
+        K_f = params['K_f']
+        phi = params['phi']
+        k = params['k']
+        eta = params['eta']
 
-def solution(params):
-    # Yoink out the parameters
-    K_d = params['K_d']
-    G = params['G']
-    K_s = params['K_s']
-    K_f = params['K_f']
-    phi = params['phi']
-    k = params['k']
-    eta = params['eta']
+        domR = params['R']
+        Load = params['Load']
 
-    domR = params['R']
-    Load = params['Load']
+        alpha = 1.0-K_d/K_s
+        S  = phi/K_f+(alpha-phi)/K_s
+        p0 = alpha / ( alpha**2 + S*(K_d+1.0/3.0*G) ) * Load
+        m  = 0.5*eta*(alpha**2+S*(K+G/3))/(alpha**2)
+        c  = ( k/eta )/(  S+alpha**2/(K_d+4.0/3.0*G)  )
 
-    alpha = 1.0-K_d/K_s
-    S  = phi/K_f+(alpha-phi)/K_s
-    p0 = alpha / ( alpha**2 + S*(K_d+1.0/3.0*G) ) * Load
-    m  = 0.5*eta*(alpha**2+S*(K+G/3))/(alpha**2)
-    c  = ( k/eta )/(  S+alpha**2/(K_d+4.0/3.0*G)  )
+        var('xi')
+        J0 = lambda x : besselj(0,x)
+        J1 = lambda x : besselj(1,x)
+        g=(2*m*xi*J0(xi)-J1(xi))
+        xi_j = [ nsolve(g,xi,j) for j in np.linspace(0,39,14) ]
 
-    var('xi')
-    J0 = lambda x : besselj(0,x)
-    J1 = lambda x : besselj(1,x)
-    g=(2*m*xi*J0(xi)-J1(xi))
-    xi_j = [ nsolve(g,xi,j) for j in np.linspace(0,39,14) ]
+        term = lambda r,t,j : ( J0(xi_j[j])-J0(xi_j[j]*r/R) )/\
+            ( (1-m*xi_j[j]**2-0.25*m)*J0(xi_j[j]) ) \
+            * exp(-xi_j[j]**2*c*t/R**2)
 
-    term = lambda r,t,j : ( J0(xi_j[j])-J0(xi_j[j]*r/R) )/\
-        ( (1-m*xi_j[j]**2-0.25*m)*J0(xi_j[j]) ) \
-        * exp(-xi_j[j]**2*c*t/R**2)
-
-    def P(r,t):
-        return sum([term(r,t,i) for i in range(1,13)])
-    def U(r,t):
-        # TODO put in the u solution. Is there one?
-        return 0.0
-    return {'P':P}
+        def P(r,t):
+            return sum([term(r,t,i) for i in range(1,13)])
+        def U(r,t):
+            # TODO put in the u solution. Is there one?
+            return 0.0
+        self.P = P
+        self.U = U
+    def __call__(self, xt):
+        return {'P':self.P(xt[:,0],xt[:,1]),
+                'U':self.U(xt[:,0],xt[:,1])}
