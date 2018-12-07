@@ -36,7 +36,7 @@ class ConvergenceTest(TestRunner):
             sdb = SimDataDB(self.cwd+"/conv_"+self.name+"_errors.db")
             runit = sdb.Decorate('test',[('h','FLOAT'),],
                                  [('points','ARRAY')]+[ (k,'ARRAY') for k in self.oracle.outputs ],
-                                 memoize=False)(runit)
+                                 memoize=True,dictreturn=True)(runit)
 
         # TODO this should be asynchronous
         self.raw = []
