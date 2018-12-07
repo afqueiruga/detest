@@ -26,12 +26,15 @@ class TestRunner(): #ut.TestCase):
     def calc_errors(self, oracle, estimate):
         errors = {}
         orc = oracle(estimate['points'])
-        regularized = lambda x : x if x > 1.0e-8 else 1.0e-8
+        # regularized = lambda x : x if x > 1.0e-8 else 1.0e-8
+        regularized = lambda x : x if x > 0.0 else 1.0
         for field in orc.keys():
             expected = orc[field]
-            e = np.linalg.norm(estimate[field] - expected)\
-                / regularized(np.linalg.norm(expected))
+            # e = np.linalg.norm(estimate[field] - expected)\
+            #     / regularized(np.linalg.norm(expected))
+            e = np.linalg.norm(estimate[field].ravel()-expected.ravel()) / float(len(expected))
             errors[field] = e
+        # from IPython import embed ; embed()
         return errors
 
     def test(self):
