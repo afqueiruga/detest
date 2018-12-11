@@ -9,6 +9,9 @@ problems = [
     detest.oracles.terzaghi,
     detest.oracles.odes,
     detest.oracles.poroelastic_well,
+    detest.oracles.single_phase_well,
+    detest.oracles.heat_equation_1d,
+    detest.oracles.wave_equation_1d,
 ]
 
 class Meta_IdentityTest(ut.TestCase):

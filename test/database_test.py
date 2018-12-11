@@ -20,4 +20,7 @@ class DatabaseTest(ut.TestCase):
         ct = detest.ConvergenceTest(detest.oracles.Terzaghi, myTerzaghi, 1, use_db = True)
         self.assertTrue(ct.test())
 
-    
+if __name__=='__main__':
+    import unittest
+    unittest.main()
+

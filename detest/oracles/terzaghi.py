@@ -78,7 +78,6 @@ class Terzaghi():
         self.P = P
         self.U = U
     def __call__(self, xt):
-
         return {'P':self.P(xt[:,0],xt[:,1]),
                 'U':self.U(xt[:,0],xt[:,1])}
 
