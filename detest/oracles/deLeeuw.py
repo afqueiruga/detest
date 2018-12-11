@@ -1,3 +1,4 @@
+from __future__ import print_function
 import numpy as np
 
 """
@@ -13,7 +14,7 @@ This is a good one to converge to numerically.
 from sympy import erf, besselj, var, nsolve, pi, cos, exp, Sum, lambdify
 from scipy.special import erf as sperf
 
-parameters = {
+default_parameters = {
     'K_d': 10.0e9,
     'G': 10.0e9,
     'K_s': 100.0*10.0e9,
@@ -33,7 +34,7 @@ class DeLeeuw():
     space_dim = 1
     time_dep = True
     ptdim = 2
-    outputs = ['P','U']
+    outputs = ['P',]
     def __init__(self, in_params=None):
         params = default_parameters
         if in_params:
@@ -48,13 +49,13 @@ class DeLeeuw():
         k = params['k']
         eta = params['eta']
 
-        domR = params['R']
+        R = params['R']
         Load = params['Load']
 
         alpha = 1.0-K_d/K_s
         S  = phi/K_f+(alpha-phi)/K_s
         p0 = alpha / ( alpha**2 + S*(K_d+1.0/3.0*G) ) * Load
-        m  = 0.5*eta*(alpha**2+S*(K+G/3))/(alpha**2)
+        m  = 0.5*eta*(alpha**2+S*(K_d+G/3))/(alpha**2)
         c  = ( k/eta )/(  S+alpha**2/(K_d+4.0/3.0*G)  )
 
         var('xi')
@@ -68,12 +69,16 @@ class DeLeeuw():
             * exp(-xi_j[j]**2*c*t/R**2)
 
         def P(r,t):
-            return sum([term(r,t,i) for i in range(1,13)])
+            return np.array([ sum([float(term(r_,t_,i).evalf()) for i in range(1,13)])
+                        for r_,t_ in zip(r,t) ])
         def U(r,t):
             # TODO put in the u solution. Is there one?
-            return 0.0
+            return np.array([0.0])
         self.P = P
         self.U = U
     def __call__(self, xt):
-        return {'P':self.P(xt[:,0],xt[:,1]),
-                'U':self.U(xt[:,0],xt[:,1])}
+        print('del P ', self.P(xt[:,0],xt[:,1]))
+        return {'P':self.P(xt[:,0],xt[:,1])}
+                # 'U':self.U(xt[:,0],xt[:,1])}
+
+tests = [DeLeeuw]

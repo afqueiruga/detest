@@ -7,9 +7,10 @@ problems = [
     detest.oracles.mechanics_constant,
     detest.oracles.poroelastic_constant,
     detest.oracles.terzaghi,
+    detest.oracles.deLeeuw,
     detest.oracles.odes,
     detest.oracles.poroelastic_well,
-    detest.oracles.single_phase_well,
+    # detest.oracles.single_phase_well,
     detest.oracles.heat_equation_1d,
     detest.oracles.wave_equation_1d,
 ]

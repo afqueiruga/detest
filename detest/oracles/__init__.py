@@ -6,6 +6,7 @@ from . import mechanics_constant, poroelastic_constant, \
 from .mechanics_constant import Uniaxial, Shear
 from .poroelastic_constant import UndrainedUniaxial, UndrainedShear
 from .terzaghi import Terzaghi
+from .deLeeuw import DeLeeuw
 from .poroelastic_well import PoroelasticWell
 from .single_phase_well import SinglePhaseWell
 from .odes import Decay, Oscillator
