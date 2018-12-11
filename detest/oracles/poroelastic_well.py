@@ -46,12 +46,12 @@ class PoroelasticWell():
         M = K_s/(alpha-phi*(1.0-K_s/K_f))
         K_u = alpha**2*M + K_d
         H = K_u + 4.0*G/3.0
-        D = k_eta*(M - alpha**2 * M**2 /H)
-
+        # D = k_eta*(M - alpha**2 * M**2 /H)
+        D = k_eta * M * (K_d+4.0*G/3.0) / (K_u+4.0*G/3)
         def U(r,t):
             xi = r**2/(4.0*D*t)
             f_xi = (1 - np.exp(-xi) ) / xi + exp1(xi)
-            return Q_s * alpha * f_xi * r / ( 8.0*np.pi*k_eta*H )
+            return Q_s * alpha * f_xi * r / ( 8.0*np.pi*k_eta* (K_d + 4.0*G/3.0) )
 
         def P(r,t):
             xi = r**2/(4.0*D*t)
