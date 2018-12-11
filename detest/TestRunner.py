@@ -30,9 +30,9 @@ class TestRunner(): #ut.TestCase):
         regularized = lambda x : x if x > 0.0 else 1.0
         for field in orc.keys():
             expected = orc[field]
-            # e = np.linalg.norm(estimate[field] - expected)\
-            #     / regularized(np.linalg.norm(expected))
-            e = np.linalg.norm(estimate[field].ravel()-expected.ravel()) / float(len(expected))
+            e = np.linalg.norm(estimate[field].ravel() - expected.ravel())\
+                / regularized(np.linalg.norm(expected))
+            # e = np.linalg.norm(estimate[field].ravel()-expected.ravel()) / float(len(expected))
             errors[field] = e
         # from IPython import embed ; embed()
         return errors

@@ -88,6 +88,15 @@ class ConvergenceTest(TestRunner):
                 yo = self.oracle( estimate['points'] )[f]
                 plt.plot(x,yo,'--',label='oracle')
                 plt.legend()
+                # Label the axes
+                try:
+                    plt.xlabel(self.report_cfg['x_label'])
+                except KeyError:
+                    plt.xlabel('x')
+                try:
+                    plt.ylabel(self.report_cfg['labels'][f])
+                except KeyError:
+                    plt.ylabel(f)
                 plt.savefig(self.cwd+"/"+self.name+"_"+f+"_contours.pdf")
         # Make a log log error plots
         plt.figure()
@@ -95,7 +104,9 @@ class ConvergenceTest(TestRunner):
             plt.loglog(self.field_errors[f][:,0],
                        self.field_errors[f][:,1],'+-',label=f)
         plt.legend()
-        plt.savefig(self.cwd+"/"+self.name+"_"+f+"_error.pdf")
+        plt.xlabel('log(h)')
+        plt.ylabel('log(error)')
+        plt.savefig(self.cwd+"/"+self.name+"_error.pdf")
 
 
     def print_report(self):
