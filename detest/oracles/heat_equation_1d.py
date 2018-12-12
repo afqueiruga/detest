@@ -14,6 +14,8 @@ u(x,0) = u0(x)
 The parameters f and u0 are functions of x; this class does the work in sympy 
 to generate the solution from the Green's funciton.
 This is a good one to converge to numerically.
+
+Andrei D Polyanin, 2005, http://eqworld.ipmnet.ru/en/solutions/lpde/heat-toc.pdf
 """
 
 import sympy

@@ -9,6 +9,8 @@ It's a dynamic problem with one spatial dimension, radius.
 The solutions it returns are P(r,t) and U(r,t).
 
 This is a good one to converge to numerically.
+
+Verruijt, Theory and Problems in Poroelasticity, 2013
 """
 
 from sympy import erf, besselj, var, nsolve, pi, cos, exp, Sum, lambdify
@@ -80,7 +82,6 @@ class DeLeeuw():
         def U(r,t):
             # TODO put in the u solution. Is there one?
             return np.array([0.0])
-        from IPython import embed ; embed()
         self.P = P
         self.U = U
     def __call__(self, xt):
