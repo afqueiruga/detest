@@ -66,22 +66,24 @@ class DeLeeuw():
         g=(2*m*xi*J0(xi)-J1(xi))
         # xi_j = [ nsolve(g,xi,j) for j in np.linspace(0,39,14) ]
         xi_j = [nsolve(g,xi,0)]
-        for j in range(50):
+        for j in range(200):
             last = xi_j[-1]
             new = nsolve(g,xi,(last+1.0e-4,last+(1.2*pi.evalf())),solver='bisect' )
             xi_j.append(new)
         print(xi_j)
-        term = lambda r,t,j : ( J0(xi_j[j])-J0(xi_j[j]*r/R) )/\
-            ( (1-m*xi_j[j]**2-0.25*m)*J0(xi_j[j]) ) \
+        J0_ = lambda x : float(besselj(0,x).evalf()) # no more symbolic math
+        term = lambda r,t,j : ( J0_(xi_j[j])-J0_(xi_j[j]*r/R) )/\
+            ( (1-m*xi_j[j]**2-1.0/(4*m) )*J0_(xi_j[j]) ) \
             * exp(-xi_j[j]**2*c*t/R**2)
 
         def P(r,t):
             return np.array([
-                sum([float(p0*term(r_,t_,i).evalf()) for i in range(len(xi_j))])
+                sum([ float(p0*term(r_,t_,i)) for i in range(len(xi_j))])
                 for r_,t_ in zip(r,t) ]) + params['P_background']
         def U(r,t):
             # TODO put in the u solution. Is there one?
             return np.array([0.0])
+        # from IPython import embed ; embed()
         self.P = P
         self.U = U
     def __call__(self, xt):
