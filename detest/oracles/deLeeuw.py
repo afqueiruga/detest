@@ -62,14 +62,14 @@ class DeLeeuw():
         c = (k/eta) * ( K_d+4.0*G/3.0 )/( alpha**2 + S*(K_d+4.0*G/3.0) )
         u0 = 0.5*R*Load / (alpha**2*1.0/S+K_d+G/3.0)
         uinf = 0.5*R*Load / (K_d+G/3.0)
-        print('u(R,0) is ',u0,'; u(R,inf) is ',uinf)
+        print('u(R,0) is ',u0,'; u(R,inf) is ',uinf, '; p(t=0) is ',p0)
         var('xi')
         J0 = lambda x : besselj(0,x)
         J1 = lambda x : besselj(1,x)
         g=(2*m*xi*J0(xi)-J1(xi))
         # xi_j = [ nsolve(g,xi,j) for j in np.linspace(0,39,14) ]
         xi_j = [float(nsolve(g,xi,0))]
-        for j in range(200):
+        for j in range(600):
             last = xi_j[-1]
             new = nsolve(g,xi,(last+1.0e-4,last+(1.2*pi.evalf())),solver='bisect' )
             xi_j.append(float(new))
