@@ -97,6 +97,7 @@ class ConvergenceTest(TestRunner):
                     plt.ylabel(self.report_cfg['labels'][f])
                 except KeyError:
                     plt.ylabel(f)
+                plt.tight_layout()
                 plt.savefig(self.cwd+"/"+self.name+"_"+f+"_contours.pdf")
         # Make a log log error plots
         plt.figure()
@@ -106,6 +107,7 @@ class ConvergenceTest(TestRunner):
         plt.legend()
         plt.xlabel('log(h)')
         plt.ylabel('log(error)')
+        plt.tight_layout()
         plt.savefig(self.cwd+"/"+self.name+"_error.pdf")
 
 
