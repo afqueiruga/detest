@@ -25,7 +25,12 @@ def get_data(fname):
     x = vtk_to_numpy( op.GetPoints().GetData() )
     pd = op.GetPointData()
     n = pd.GetNumberOfArrays()
-    dic = { pd.GetArrayName(i):vtk_to_numpy( pd.GetArray(i) ) for i in range(n) }
+    dic = { pd.GetArrayName(i):vtk_to_numpy( pd.GetArray(i) ) 
+            for i in range(n) }
+    cd = op.GetCellData()
+    nc = cd.GetNumberOfArrays()
+    dic.update( { 'cell_'+cd.GetArrayName(i):vtk_to_numpy( cd.GetArray(i) ) 
+                    for i in range(nc) } )
     return x,dic
 
 def cat_with_times(fpattern,timefile, fields):
