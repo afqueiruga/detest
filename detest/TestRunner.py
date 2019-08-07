@@ -1,6 +1,7 @@
 # Parent class
 #import unittest as ut
 import numpy as np
+import os
 
 class TestRunner(): #ut.TestCase):
     """
@@ -18,6 +19,7 @@ class TestRunner(): #ut.TestCase):
             self.cwd = scratch_space
         else:
             self.cwd = '.'
+        os.makedirs(self.cwd, exist_ok=True)
         self.report_cfg = {
             'idx':-1,
         }
