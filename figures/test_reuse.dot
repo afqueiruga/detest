@@ -1,0 +1,9 @@
+digraph{
+ Test[label="detest Library\nMaths"];
+ ProgA[label="Program A\nFEM (tris)"];
+ ProgB[label="Program B\nFEM (tets)"];
+ ProgC[label="Program C\nFDM"];
+ Test -> ProgA -> Test;
+ Test -> ProgB -> Test;
+ Test -> ProgC -> Test;
+}

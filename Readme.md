@@ -10,7 +10,13 @@ This repository contains a set of testing problems with known analytical solutio
 It can generate a testing framework based on Python's unittest test will automatically compare your code to these oracles, making sure on a variety of problems that your code are exactly correct, an approximation that converges at the expected rate, or at least gives you the same answer you got yesterday.
 
 These tests were originally written to support various codes in the Earth and Environmental Sciences division at Lawrence Berkeley National Lab, and have been merged into this unifying framework.
-The impetus was when I realized I kept copying and pasting the same Python files implementing analytical solutions, and hapharzardly implementing the same convergence testing.
+The impetus was when I realized I kept copying and pasting the same Python files implementing analytical solutions, and hapharzardly implementing the same convergence testing. 
+When you write an incredibly complicated test yourself and it does not agree with your code, you don't know if the problem is with the test or your code.
+This makes the tests themselves problematic: I and collaborators have had plenty of trouble deriving, researching, and even typing up the analytical solutions themselves.
+Having a centralized testing framework not only makes it **easier to follow best practices**, it also **validates the tests themselves** by cross referencing with multiple codes:
+
+![cross validation of tests](figures/test_reuse.png)
+
 
 ## Introduction
 
