@@ -31,7 +31,7 @@ class Decay():
         'k':1.0
     }
     def __init__(self,in_params=None):
-        self.params = self.default_parameters
+        self.params = self.default_parameters.copy()
         if in_params: self.params.update(in_params)
     def __call__(self,t):
         u = self.params['u0']*np.exp( -self.params['k']*t)
@@ -54,7 +54,7 @@ class Oscillator():
         'm':1.0,'k':2.0,'f':0.0,
     }
     def __init__(self,in_params=None):
-        self.params = self.default_parameters
+        self.params = self.default_parameters.copy()
         if in_params: self.params.update(in_params)
         self.omega = np.sqrt(self.params['k'] / self.params['m'])
         self.amplitude = self.params['x0'] # TODO

@@ -24,6 +24,7 @@ class ThinCrack():
     time_dep = False
     ptdim = 2
     def __init__(self,params):
+        # TODO Migrate from periflakes
         def U(x,u):
             pass
         self.U = U

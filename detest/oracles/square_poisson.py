@@ -25,7 +25,7 @@ class SquarePoisson():
     time_dep = False
     ptdim = 3
     def __init__(self,params=default_parameters):
-        self.params = params
+        self.params = params.copy()
         # Yoink out the parameters
         K_d = params['K_d']
         K_s = params['K_s']

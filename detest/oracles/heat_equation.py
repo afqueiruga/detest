@@ -26,7 +26,7 @@ class SquareHomogenousHeatEquation():
     time_dep = False
     ptdim = 3
     def __init__(self,in_params=None):
-        params = default_parameters
+        params = default_parameters.copy()
         if in_params:
             params.update(in_params)
         self.params = params
@@ -52,7 +52,7 @@ class SquareForcedHeatEquation():
     time_dep = False
     ptdim = 3
     def __init__(self,in_params=None):
-        params = default_parameters
+        params = default_parameters.copy()
         if in_params:
             params.update(in_params)
         self.params = params

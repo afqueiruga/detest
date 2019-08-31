@@ -22,7 +22,7 @@ class Uniaxial():
     ptdim = 3
     outputs = ['sigma','U']
     def __init__(self, in_params=None):
-        params = default_parameters
+        params = default_parameters.copy()
         if in_params:
             params.update(in_params)
         self.params = params
@@ -50,7 +50,7 @@ class Shear():
     ptdim = 3
     outputs = ['sigma','U']
     def __init__(self, in_params=None):
-        params = default_parameters
+        params = default_parameters.copy()
         if in_params:
             params.update(in_params)
         self.params = params

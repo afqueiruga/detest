@@ -26,7 +26,7 @@ class SinglePhaseWell():
     default_params = default_parameters
     outputs = ['P']
     def __init__(self,in_params=None):
-        params = self.default_params
+        params = self.default_params.copy()
         if in_params:
             params.update(in_params)
         self.params = params
@@ -62,7 +62,7 @@ class SteadySinglePhaseWell():
     default_params = default_parameters
     outputs = ['P']
     def __init__(self,in_params=None):
-        params = self.default_params
+        params = self.default_params.copy()
         if in_params:
             params.update(in_params)
         # Yoink out the parameters
