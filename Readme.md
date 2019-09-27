@@ -124,24 +124,20 @@ A strategy is to examine ergodic properties, such as the center point of an attr
 These have to be coupled by making your code solve the simpler problems, too.
 Currently, we have no such tests in this package.
 
-
 ## The Tests
 
-Right now, there are only solutions for poroelasticity and single-phase flow.
+Right now, the focus is on problems in subsurface flow and
+mechanics. The complete list of oracles is 
 
-- Oracles:
+1. Constant strain modes in elasticity
+1. Constant flux flow
+1. Terzaghi's consolidation
+1. de Leeuw's consolidation
+1. Thin crack in tension / under pressure
+1. Poisson problem
+1. Radial production in a poroelastic system
 
-  1. Constant strain modes in elasticity
-  2. Constant flux flow
-  1. Terzaghi's consolidation
-  2. de Leeuw's consolidation
-  3. Thin crack in tension / under pressure
-  4. Poisson problem
-  5. Radial production in a poroelastic system
-
-- Reference problems:
-
-  1. None yet
+No "gold standard" datasets for reference problems have been included yet.
 
 The problems in the library each have their own module.
 Each module has a description, default parameter dictionary, and at least one class that implements the solution.
@@ -154,10 +150,14 @@ This strictly doesn't matter, but for some codes the properties are not inputs, 
 
 ## Installation
 
-detest is compatible with both Python 2 and 3. Numpy is required, and some of the oracles make use of Scipy and Sympy. Install it with setuptools,
+detest is compatible with both Python 2 and 3. Numpy is required, and
+some of the oracles make use of Scipy and Sympy. Install it with
+setuptools,
+
 ```bash
-python setup.py install --prefix=/path/to/install/to
+python3 setup.py install --prefix=/path/to/install/to
 ```
+
 and then import it with `import detest`.
 
 ## Using the Test Suite
@@ -172,19 +172,22 @@ Detest will automatically call the script with a set of parameters with many dif
 The output is a dictionary that matches the field names of the oracle, plus an additional field 'points'.
 
 For a command line code, this will look something like this:
+
 ```python
 def myScript(parameters, h):
-  make_tough_input(h,parameters)
-  sp.call(['TH','millstone_input.py',str(h)])
-  x,U,P = process_results_for_testing()
-  return {'U':U,'P':P, 'points':x}
+    make_tough_input(h,parameters)
+    sp.call(['TH','millstone_input.py',str(h)])
+    x,U,P = process_results_for_testing()
+    return {'U':U,'P':P, 'points':x}
 ```
+
 where the developer is responsible for autogenerating their input files.
 
 ### Making an automated suite
 
 Detest will autogenerate a unittest suite.
 A snippet this short will populate the unittest framework:
+
 ```python
 suite = [
     detest.ExactTest(      detest.oracles.Uniaxial, myUniaxial),
@@ -193,10 +196,13 @@ suite = [
 ]
 MyTestSuite = detest.make_suite(suite)
 ```
+
 The file can then be executed with the unittest module,
+
 ```bash
 python -m unittest MyTestSuite.py
 ```
+
 The power of this architecture is that list can be generated with a loop.
 An example of this is in [afqsrungekutta](https://github.com/afqueiruga/afqsrungekutta/blob/master/test/de_test.py),
 wherein a seperate ConvergenceTest for every each tableau is made.
