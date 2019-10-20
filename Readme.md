@@ -18,6 +18,23 @@ Having a centralized testing framework not only makes it **easier to follow best
 ![cross validation of tests](figures/test_reuse.png)
 
 
+## Installation
+
+detest is compatible with both Python 2 and 3. Numpy is required, and
+some of the oracles make use of Scipy and Sympy. Install it from PyPI,
+
+```bash
+pip3 install detest
+```
+
+or clone it and use setuptools,
+
+```bash
+python3 setup.py install --prefix=/path/to/install/to
+```
+
+and then import it with `import detest`.
+
 ## Introduction
 
 Testing numerical scientific and engineering codes has a further challenge than normal software.
@@ -148,17 +165,6 @@ The module will have a default set of parameters.
 The units for default properties are all in SI.
 This strictly doesn't matter, but for some codes the properties are not inputs, but instead intrinsic to the theoretical formulation.
 
-## Installation
-
-detest is compatible with both Python 2 and 3. Numpy is required, and
-some of the oracles make use of Scipy and Sympy. Install it with
-setuptools,
-
-```bash
-python3 setup.py install --prefix=/path/to/install/to
-```
-
-and then import it with `import detest`.
 
 ## Using the Test Suite
 
