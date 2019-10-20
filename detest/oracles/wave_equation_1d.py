@@ -4,7 +4,7 @@ description = """
 This file contains the analytical solution to the heat equation on a line
 domain from [0,1].
 
-The solutions it returns are of u(x,t).
+The solutions it returns are of u(x,t) and v(x,t).
 
 d^2u/dt^2 =  k d^2/dx^2 u + f
 u(0,t) = 0
@@ -26,11 +26,12 @@ default_parameters = {
 }
 
 class WaveEquation1D():
+    __doc__ = description
     name = 'WaveEquation1D'
     space_dim = 1
     time_dep = True
     ptdim = 2
-    outputs = ['u']
+    outputs = ['u','v']
     def __init__(self,in_params=None):
         params = default_parameters.copy()
         if in_params:
@@ -46,10 +47,12 @@ class WaveEquation1D():
         self.terms = [ term1(n) for n in range(1,21) ]
         print(self.terms)
     def __call__(self, xt):
-        tot = np.zeros(xt.shape[0])
+        tot_u = np.zeros(xt.shape[0])
+        tot_v = np.zeros(xt.shape[0])
         for nminus1,tn in enumerate(self.terms):
             n = nminus1+1
-            tot += 2.0*np.sin(n*np.pi*xt[:,0])*np.cos(self.k*n*np.pi*xt[:,1])*tn
-        return {'u':tot}
+            tot_u += 2.0*np.sin(n*np.pi*xt[:,0])*np.cos(self.k*n*np.pi*xt[:,1])*tn
+            tot_v += -self.k*np.pi* 2.0*np.sin(n*np.pi*xt[:,0])*np.sin(self.k*n*np.pi*xt[:,1])*tn
+        return {'u':tot_u,'v':tot_v}
 
 tests = [WaveEquation1D]

@@ -27,6 +27,7 @@ default_parameters = {
 }
 
 class HeatEquation1D():
+    __doc__=description
     name = 'HeatEquation1D'
     space_dim = 1
     time_dep = True
