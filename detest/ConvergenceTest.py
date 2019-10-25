@@ -2,7 +2,6 @@ from __future__ import print_function
 import numpy as np
 import scipy.stats
 from collections import defaultdict
-from SimDataDB import SimDataDB
 
 from .TestRunner import TestRunner
 
@@ -33,6 +32,7 @@ class ConvergenceTest(TestRunner):
         def runit(h):
             return self.script(params,h)
         if self.use_db:
+            from SimDataDB import SimDataDB
             sdb = SimDataDB(self.cwd+"/conv_"+self.name+"_errors.db")
             runit = sdb.Decorate('test',[('h','FLOAT'),],
                                  [('points','ARRAY')]+[ (k,'ARRAY') for k in self.oracle.outputs ],
