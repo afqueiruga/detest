@@ -6,7 +6,7 @@ def read(fname):
 
 setup(
     name = "detest",
-    version = "0.1",
+    version = "0.2",
     author = "Alejandro Francisco Queiruga",
     description = "A differential equation testing suite",
     url="https://github.com/afqueiruga/detest",
