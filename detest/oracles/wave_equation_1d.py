@@ -52,7 +52,7 @@ class WaveEquation1D():
         for nminus1,tn in enumerate(self.terms):
             n = nminus1+1
             tot_u += 2.0*np.sin(n*np.pi*xt[:,0])*np.cos(self.k*n*np.pi*xt[:,1])*tn
-            tot_v += -self.k*np.pi* 2.0*np.sin(n*np.pi*xt[:,0])*np.sin(self.k*n*np.pi*xt[:,1])*tn
+            tot_v += -self.k*n*np.pi* 2.0*np.sin(n*np.pi*xt[:,0])*np.sin(self.k*n*np.pi*xt[:,1])*tn
         return {'u':tot_u,'v':tot_v}
 
 tests = [WaveEquation1D]
