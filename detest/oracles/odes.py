@@ -1,10 +1,6 @@
+"""This file contains some basic ODEs with analytical solutions."""
+
 import numpy as np
-
-name = "odes"
-
-description = """
-This file contains some basic ODEs with analytical solutions
-"""
 
 default_parameters = {
     'x0': 1.0,
@@ -72,7 +68,9 @@ class Oscillator():
 
 
 class ElectricCurrentDAE():
-    """
+    """A solution used in my dissertation.
+
+    TODO: Copy it in.
 
     Watch out: This one is not a normal ODE
     """

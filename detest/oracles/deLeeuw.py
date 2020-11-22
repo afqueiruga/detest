@@ -1,5 +1,3 @@
-from __future__ import print_function
-import numpy as np
 """
 This file contains the analytical solution to de Leeuw's consolidation
 problem. It's similar to Mandel's problem, but is cylindrically symmetric.
@@ -11,9 +9,9 @@ This is a good one to converge to numerically.
 
 Verruijt, Theory and Problems in Poroelasticity, 2013
 """
-
-from sympy import erf, besselj, var, nsolve, pi, cos, exp, Sum, lambdify
+import numpy as np
 import scipy.special as scisp
+from sympy import erf, besselj, var, nsolve, pi, cos, exp, Sum, lambdify
 
 default_parameters = {
     'K_d': 10.0e9,

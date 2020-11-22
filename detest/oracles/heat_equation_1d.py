@@ -1,8 +1,4 @@
-from __future__ import print_function
-
-description = """
-This file contains the analytical solution to the heat equation on a line
-domain from [0,1].
+"""Analytical solution to the heat equation on a line domain from [0,1].
 
 The solutions it returns are of u(x,t).
 
@@ -17,9 +13,9 @@ This is a good one to converge to numerically.
 
 Andrei D Polyanin, 2005, http://eqworld.ipmnet.ru/en/solutions/lpde/heat-toc.pdf
 """
-
-import sympy
 import numpy as np
+import sympy
+
 default_parameters = {
     'k': 1.0,
     'f': lambda x: 0.0,
@@ -28,7 +24,6 @@ default_parameters = {
 
 
 class HeatEquation1D():
-    __doc__ = description
     name = 'HeatEquation1D'
     space_dim = 1
     time_dep = True

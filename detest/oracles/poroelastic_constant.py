@@ -55,15 +55,18 @@ class UndrainedUniaxial():
         self.sigxy = 0.0
 
     def __call__(self, x):
-        return {#'eps':np.array([[0.0,0.0,0.0],
-                #                [0.0,self.eps,0.0],
-                #                [0.0,0.0,0.0]]),
-                'sigma':np.array([[self.sigxx,self.sigxy,0.0],
-                                  [self.sigxy,self.sigyy,0.0],
-                                  [0.0,  0.0,  self.sigzz]]),
-                'U':np.array([ [0,self.eps*_,0] for _ in x[:,1] ]),
-                'P':np.array([ self.P0 for _ in x[:,0]]),
-                }
+        return {
+            #'eps':np.array([[0.0,0.0,0.0],
+            #                [0.0,self.eps,0.0],
+            #                [0.0,0.0,0.0]]),
+            'sigma':
+            np.array([[self.sigxx, self.sigxy, 0.0],
+                      [self.sigxy, self.sigyy, 0.0], [0.0, 0.0, self.sigzz]]),
+            'U':
+            np.array([[0, self.eps * _, 0] for _ in x[:, 1]]),
+            'P':
+            np.array([self.P0 for _ in x[:, 0]]),
+        }
 
 
 class UndrainedShear():
@@ -87,14 +90,20 @@ class UndrainedShear():
         self.sigxy = Load
 
     def __call__(self, x):
-        return {#'eps':np.array([[0.0,self.eps,0.0],
-                #                [self.eps,0.0,0.0],
-                #                [0.0,0.0,0.0]]),
-                'sigma':np.array([[self.sigxx,self.sigxy,0.0],
-                                  [self.sigxy,self.sigyy,0.0],
-                                  [0.0,  0.0,  self.sigzz]]),
-                'U':np.array([ [0,self.eps*_,0] for _ in x[:,0] ]),
-                'P':np.zeros([x.shape[0]]),
+        return {
+            #'eps':np.array([[0.0,self.eps,0.0],
+            #                [self.eps,0.0,0.0],
+            #                [0.0,0.0,0.0]]),
+            'sigma':
+            np.array([
+                [self.sigxx, self.sigxy, 0.0],
+                [self.sigxy, self.sigyy, 0.0],
+                [0.0, 0.0, self.sigzz],
+            ]),
+            'U':
+            np.array([[0, self.eps * _, 0] for _ in x[:, 0]]),
+            'P':
+            np.zeros([x.shape[0]]),
         }
 
 

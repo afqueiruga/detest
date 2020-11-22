@@ -37,14 +37,15 @@ class Uniaxial():
         self.sigxy = 0.0
 
     def __call__(self, x):
-        return {  #'eps':np.array([[0.0,0.0,0.0],
+        return {
+            #'eps':np.array([[0.0,0.0,0.0],
             #                [0.0,self.eps,0.0],
             #                [0.0,0.0,0.0]]),
             'sigma':
             np.array([[self.sigxx, self.sigxy, 0.0],
                       [self.sigxy, self.sigyy, 0.0], [0.0, 0.0, self.sigzz]]),
             'U':
-            np.array([[0, self.eps * _, 0] for _ in x[:, 1]])
+            np.array([[0, self.eps * _, 0] for _ in x[:, 1]]),
         }
 
 
@@ -68,18 +69,19 @@ class Shear():
         self.sigxy = Load
 
     def __call__(self, x):
-        return {  #'eps':np.array([[0.0,self.eps,0.0],
+        return {
+            #'eps':np.array([[0.0,self.eps,0.0],
             #                [self.eps,0.0,0.0],
             #                [0.0,0.0,0.0]]),
             'sigma':
             np.array([[self.sigxx, self.sigxy, 0.0],
                       [self.sigxy, self.sigyy, 0.0], [0.0, 0.0, self.sigzz]]),
             'U':
-            np.array([[0, self.eps * _, 0] for _ in x[:, 0]])
+            np.array([[0, self.eps * _, 0] for _ in x[:, 0]]),
         }
 
 
-class isotropic():
+class Isotropic():
     def __init__(self, params):
         pass
 
@@ -87,7 +89,8 @@ class isotropic():
         return {}
 
 
-class random_patch():
+class RandomPatch():
+    """The randomized patch test from FEM."""
     def __init__(self, params):
         pass
 

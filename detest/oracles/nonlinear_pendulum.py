@@ -1,9 +1,7 @@
+"""The traditional nonlinear pendulum with R=1."""
+
 import numpy as np
 from scipy.special import ellipj, ellipk
-
-description = """
-This is the traditional nonlinear pendulum with R=1.
-"""
 
 
 class PendulumTheta():

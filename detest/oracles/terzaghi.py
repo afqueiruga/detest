@@ -1,15 +1,12 @@
-import numpy as np
-
-name = "terzaghi"
-
-description = """
-This file contains the analytical solution to Terzaghi's consolidation problem.
+"""Terzaghi's consolidation problem.
 
 It's a dynamic problem with one spatial dimension, height.
 The solutions it returns are P(z,t) and U(z,t).
 
 This is a good one to converge to numerically.
 """
+
+import numpy as np
 
 default_parameters = {
     'K_d': 10.0e9,

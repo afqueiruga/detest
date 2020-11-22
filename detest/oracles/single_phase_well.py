@@ -1,7 +1,10 @@
-"""
-Constant flow production from an infinitely large reservoir, without poromechanics.
+"""Constant flow production from an infinitely large reservoir, without poromechanics.
 
-
+I recommend the discussion of these problems in 
+> White, M.D et al.“An international code comparison study on coupled thermal,
+> hydrologic and geomechanical processes of natural gas hydrate-bearing 
+> sediments.” Marine and Petroleum Geology, 2020.
+to check this implementation.
 """
 
 import numpy as np

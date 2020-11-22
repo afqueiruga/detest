@@ -1,10 +1,7 @@
-from __future__ import print_function
+"""The wave equation on a line domain from [0,1].
 
-description = """
-This file contains the analytical solution to the heat equation on a line
-domain from [0,1].
-
-The solutions it returns are of u(x,t) and v(x,t).
+The solutions it returns are of u(x,t) and v(x,t). Both boundary conditions are
+dirrichlet constant-in-time on both sides.
 
 d^2u/dt^2 =  k d^2/dx^2 u + f
 u(0,t) = 0
@@ -14,6 +11,8 @@ u(x,0) = u0(x)
 The parameters f and u0 are functions of x; this class does the work in sympy 
 to generate the solution from the Green's funciton.
 This is a good one to converge to numerically.
+
+# TODO fill in citation
 """
 
 import sympy
@@ -27,7 +26,6 @@ default_parameters = {
 
 
 class WaveEquation1D():
-    __doc__ = description
     name = 'WaveEquation1D'
     space_dim = 1
     time_dep = True
