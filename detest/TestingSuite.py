@@ -9,10 +9,10 @@ subsample set frequently, and then schedule the exhaustive tests less
 frequently.
 """
 
+import unittest as ut
+
 from .ExactTest import ExactTest
 from .ConvergenceTest import ConvergenceTest
-
-import unittest as ut
 
 
 def make_suite(suite, cwd='./detest_report/', report=False):

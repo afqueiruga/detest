@@ -1,10 +1,8 @@
-# Parent class
-#import unittest as ut
 import numpy as np
 import os
 
 
-class TestRunner():  #ut.TestCase):
+class TestRunner():
     """
     Give this clas one problem and one script, and it will run a _convergence_
     test on the code, automatically.
@@ -36,6 +34,7 @@ class TestRunner():  #ut.TestCase):
     def calc_errors(self, oracle, estimate):
         errors = {}
         orc = oracle(estimate['points'])
+        # I picked one of these for a good reason I forgot.
         # regularized = lambda x : x if x > 1.0e-8 else 1.0e-8
         regularized = lambda x: x if x > 0.0 else 1.0
         for field in orc.keys():
@@ -44,7 +43,6 @@ class TestRunner():  #ut.TestCase):
                 / regularized(np.linalg.norm(expected))
             # e = np.linalg.norm(estimate[field].ravel()-expected.ravel()) / float(len(expected))
             errors[field] = e
-        # from IPython import embed ; embed()
         return errors
 
     def test(self):

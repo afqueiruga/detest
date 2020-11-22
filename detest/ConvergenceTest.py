@@ -1,13 +1,12 @@
-from __future__ import print_function
+from collections import defaultdict
 import numpy as np
 import scipy.stats
-from collections import defaultdict
 
 from .TestRunner import TestRunner
 
 
 def rate(hs, es):
-    " Calculate convergence rate "
+    "Calculate convergence rate."
     return scipy.stats.linregress([np.log(h) for h in hs],
                                   [np.log(e) for e in es])[0]
 
@@ -74,13 +73,12 @@ class ConvergenceTest(TestRunner):
         return passed
 
     def plot_results(self):
-        """ Make plots to generate a report """
+        """Make plots to generate a report."""
         import matplotlib
         matplotlib.use('agg')
         from matplotlib import pylab as plt
         # sdb = SimDataDB(self.cwd+"/conv_"+self.oracle.name+"_errors.db")
         # Make the contour plots
-
         for f in self.problem.outputs:
             if self.raw[0][1][f].shape[0] == self.raw[0][1]['points'].shape[0]:
                 plt.close('all')

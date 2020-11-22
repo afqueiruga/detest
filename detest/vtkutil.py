@@ -1,4 +1,3 @@
-from __future__ import print_function
 import glob, re
 import vtk
 from vtk.util.numpy_support import vtk_to_numpy
