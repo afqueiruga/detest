@@ -19,11 +19,12 @@ This is a good one to converge to numerically.
 import sympy
 import numpy as np
 default_parameters = {
-    'k':1.0,
-    'f': lambda x : 0.0,
-    'u0': lambda x : 4*x*(1-x),
-    'v0': lambda x : 0,
+    'k': 1.0,
+    'f': lambda x: 0.0,
+    'u0': lambda x: 4 * x * (1 - x),
+    'v0': lambda x: 0,
 }
+
 
 class WaveEquation1D():
     __doc__ = description
@@ -31,8 +32,9 @@ class WaveEquation1D():
     space_dim = 1
     time_dep = True
     ptdim = 2
-    outputs = ['u','v']
-    def __init__(self,in_params=None):
+    outputs = ['u', 'v']
+
+    def __init__(self, in_params=None):
         params = default_parameters.copy()
         if in_params:
             params.update(in_params)
@@ -41,18 +43,24 @@ class WaveEquation1D():
         self.k = params['k']
         u0 = params['u0']
         f = params['f']
-        n,xi = sympy.symbols('n xi',positive=True)
-        green1 = sympy.integrate(sympy.sin(n*sympy.pi*xi)*u0(xi),(xi,0,1))
-        term1 = sympy.lambdify([n],green1)
-        self.terms = [ term1(n) for n in range(1,21) ]
+        n, xi = sympy.symbols('n xi', positive=True)
+        green1 = sympy.integrate(
+            sympy.sin(n * sympy.pi * xi) * u0(xi), (xi, 0, 1))
+        term1 = sympy.lambdify([n], green1)
+        self.terms = [term1(n) for n in range(1, 21)]
         print(self.terms)
+
     def __call__(self, xt):
         tot_u = np.zeros(xt.shape[0])
         tot_v = np.zeros(xt.shape[0])
-        for nminus1,tn in enumerate(self.terms):
-            n = nminus1+1
-            tot_u += 2.0*np.sin(n*np.pi*xt[:,0])*np.cos(self.k*n*np.pi*xt[:,1])*tn
-            tot_v += -self.k*n*np.pi* 2.0*np.sin(n*np.pi*xt[:,0])*np.sin(self.k*n*np.pi*xt[:,1])*tn
-        return {'u':tot_u,'v':tot_v}
+        for nminus1, tn in enumerate(self.terms):
+            n = nminus1 + 1
+            tot_u += 2.0 * np.sin(n * np.pi * xt[:, 0]) * np.cos(
+                self.k * n * np.pi * xt[:, 1]) * tn
+            tot_v += -self.k * n * np.pi * 2.0 * np.sin(
+                n * np.pi * xt[:, 0]) * np.sin(
+                    self.k * n * np.pi * xt[:, 1]) * tn
+        return {'u': tot_u, 'v': tot_v}
+
 
 tests = [WaveEquation1D]
